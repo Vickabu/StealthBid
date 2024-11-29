@@ -30,7 +30,7 @@ function createNavbar() {
   navbar.classList.add(...navbarStyles.container);
 
   const logo = document.createElement("img");
-  logo.src = "public/BrightLogo.png";
+  logo.src = "/BrightLogo.png";
   logo.alt = "Logo";
   logo.classList.add(...navbarStyles.logo);
 
@@ -52,7 +52,7 @@ function createNavbar() {
 function createAuthModal() {
   const modal = document.createElement("div");
   modal.id = "auth-popup";
-  modal.classList.add(...modalStyles.overlay); // "hidden"
+  modal.classList.add(...modalStyles.overlay, "hidden"); // "hidden"
 
   const modalContainer = document.createElement("div");
   modalContainer.classList.add(...modalStyles.container);
@@ -61,7 +61,7 @@ function createAuthModal() {
   header.classList.add(...modalStyles.header);
 
   const logo = document.createElement("img");
-  logo.src = "public/DarkLogoBGF.png";
+  logo.src = "/DarkLogoBGF.png";
   logo.alt = "Logo";
   logo.classList.add(...modalStyles.logo);
 
