@@ -1,13 +1,14 @@
 export const navbarStyles = {
-  container: [
+  container: ["w-full", "bg-deepTeal", "text-white", "px-4", "py-2"],
+  innerContainer: [
+    "max-w-screen-lg",
+    "mx-auto",
     "flex",
     "items-center",
     "justify-between",
-    "p-4",
-    "bg-deepTeal",
-    "text-white",
+    "mt-auto",
   ],
-  logo: ["max-h-14"],
+  logo: ["max-h-14", "cursor-pointer"],
   loginButton: [
     "bg-dustyTan",
     "py-2",
@@ -15,6 +16,18 @@ export const navbarStyles = {
     "rounded-sm",
     "text-black",
     "hover:bg-warmSand",
+  ],
+  avatarButton: ["flex", "items-center", "space-x-2", "p4"],
+  avatarImage: ["w-10", "h-10", "rounded-full"],
+  credits: ["text-sm", "font-semibold"],
+  links: ["py-2", "px-4", "rounded", "hover:border", "mt-auto"],
+  logoutButton: [
+    "bg-mutedRose",
+    "text-black",
+    "py-2",
+    "px-4",
+    "rounded-sm",
+    "hover:bg-[#B16E6E]",
   ],
 };
 
@@ -28,7 +41,6 @@ export const modalStyles = {
     "bg-black",
     "bg-opacity-50",
   ],
-
   container: [
     "flex",
     "flex-col",

@@ -1,0 +1,235 @@
+// import { navbarStyles, modalStyles, tabStyles, formStyles } from "./styles";
+// import { onLogin } from "../api/auth/login";
+// /**
+//  * Creates a navbar with a login button and a global authentication modal.
+//  * The modal includes Login and Register forms and supports toggling between them.
+//  *
+//  * @example
+//  * createNavbarAndModal();
+//  * document.body.appendChild(navbar);
+//  */
+
+// export function createNavbarAndModal() {
+//   const navbar = createNavbar();
+//   const modal = createAuthModal();
+
+//   document.body.insertAdjacentElement("afterbegin", navbar);
+//   document.body.insertAdjacentElement("beforeend", modal);
+
+//   setupEventListeners();
+// }
+
+// /**
+//  * Creates the navbar element with a login button.
+//  *
+//  * @returns {HTMLElement} The navbar element.
+//  */
+
+// function createNavbar() {
+//   const navbar = document.createElement("nav");
+//   navbar.classList.add(...navbarStyles.container);
+
+//   const logo = document.createElement("img");
+//   logo.src = "/BrightLogo.png";
+//   logo.alt = "Logo";
+//   logo.classList.add(...navbarStyles.logo);
+
+//   const loginButton = document.createElement("button");
+//   loginButton.id = "auth-btn";
+//   loginButton.textContent = "Sign In";
+//   loginButton.classList.add(...navbarStyles.loginButton);
+
+//   navbar.append(logo, loginButton);
+//   return navbar;
+// }
+
+// /**
+//  * Creates the authentication modal, including Login and Register forms.
+//  *
+//  * @returns {HTMLElement} The modal element.
+//  */
+
+// function createAuthModal() {
+//   const modal = document.createElement("div");
+//   modal.id = "auth-popup";
+//   modal.classList.add(...modalStyles.overlay, "hidden"); // "hidden"
+
+//   const modalContainer = document.createElement("div");
+//   modalContainer.classList.add(...modalStyles.container);
+
+//   const header = document.createElement("div");
+//   header.classList.add(...modalStyles.header);
+
+//   const logo = document.createElement("img");
+//   logo.src = "/DarkLogoBGF.png";
+//   logo.alt = "Logo";
+//   logo.classList.add(...modalStyles.logo);
+
+//   const closeButton = document.createElement("button");
+//   closeButton.id = "close-popup";
+//   closeButton.textContent = "×";
+//   closeButton.classList.add(...modalStyles.closeButton);
+
+//   header.append(logo, closeButton);
+
+//   const tabs = createAuthTabs();
+//   const forms = createAuthForms();
+
+//   modalContainer.append(header, tabs, forms);
+//   modal.appendChild(modalContainer);
+
+//   return modal;
+// }
+
+// /**
+//  * Creates tab buttons for switching between Login and Register forms.
+//  *
+//  * @returns {HTMLElement} The tabs container.
+//  */
+
+// function createAuthTabs() {
+//   const tabs = document.createElement("div");
+//   tabs.classList.add(...tabStyles.container);
+
+//   const loginTab = document.createElement("button");
+//   loginTab.id = "login-tab";
+//   loginTab.textContent = "Login";
+//   loginTab.classList.add(...tabStyles.tab, tabStyles.activeTab);
+
+//   const registerTab = document.createElement("button");
+//   registerTab.id = "register-tab";
+//   registerTab.textContent = "Register";
+//   registerTab.classList.add(...tabStyles.tab);
+
+//   tabs.append(loginTab, registerTab);
+//   return tabs;
+// }
+
+// /**
+//  * Creates the Login and Register forms.
+//  *
+//  * @returns {HTMLElement} The forms container.
+//  */
+
+// function createAuthForms() {
+//   const formsContainer = document.createElement("div");
+//   formsContainer.id = "auth-forms";
+//   formsContainer.classList.add(...formStyles.container);
+
+//   const loginForm = document.createElement("form");
+//   loginForm.id = "login-form";
+//   loginForm.classList.add(...formStyles.form);
+
+//   const loginFields = [
+//     { type: "email", placeholder: "Email", id: "login-email", required: true },
+//     {
+//       type: "password",
+//       placeholder: "Password",
+//       id: "login-password",
+//       required: true,
+//     },
+//   ];
+
+//   loginFields.forEach((field) => {
+//     const input = document.createElement("input");
+//     input.type = field.type;
+//     input.placeholder = field.placeholder;
+//     input.id = field.id;
+//     input.required = field.required;
+//     input.classList.add(...formStyles.input);
+//     loginForm.appendChild(input);
+//   });
+
+//   const loginSubmitButton = document.createElement("button");
+//   loginSubmitButton.type = "submit";
+//   loginSubmitButton.classList.add(...formStyles.submitButton);
+//   loginSubmitButton.textContent = "Login";
+//   loginForm.appendChild(loginSubmitButton);
+
+//   const registerForm = document.createElement("form");
+//   registerForm.id = "register-form";
+//   registerForm.classList.add(...formStyles.form, "hidden");
+
+//   const registerFields = [
+//     { type: "text", placeholder: "Name", id: "register-name", required: true },
+//     {
+//       type: "email",
+//       placeholder: "Email",
+//       id: "register-email",
+//       required: true,
+//     },
+//     {
+//       type: "password",
+//       placeholder: "Password",
+//       id: "register-password",
+//       required: true,
+//     },
+//     {
+//       type: "password",
+//       placeholder: "Repeat Password",
+//       id: "register-password-repeat",
+//       required: true,
+//     },
+//   ];
+
+//   registerFields.forEach((field) => {
+//     const input = document.createElement("input");
+//     input.type = field.type;
+//     input.placeholder = field.placeholder;
+//     input.id = field.id;
+//     input.required = field.required;
+//     input.classList.add(...formStyles.input);
+//     registerForm.appendChild(input);
+//   });
+
+//   const registerSubmitButton = document.createElement("button");
+//   registerSubmitButton.type = "submit";
+//   registerSubmitButton.classList.add(...formStyles.submitButton);
+//   registerSubmitButton.textContent = "Register";
+//   registerForm.appendChild(registerSubmitButton);
+
+//   formsContainer.append(loginForm, registerForm);
+//   return formsContainer;
+// }
+
+// /**
+//  * Sets up event listeners for modal interactions.
+//  */
+
+// function setupEventListeners() {
+//   document.getElementById("auth-btn").addEventListener("click", () => {
+//     document.getElementById("auth-popup").classList.remove("hidden");
+//   });
+
+//   document.getElementById("close-popup").addEventListener("click", () => {
+//     document.getElementById("auth-popup").classList.add("hidden");
+//   });
+
+//   document.getElementById("auth-popup").addEventListener("click", (event) => {
+//     if (event.target === document.getElementById("auth-popup")) {
+//       document.getElementById("auth-popup").classList.add("hidden");
+//     }
+//   });
+
+//   window.addEventListener("keydown", (event) => {
+//     if (event.key === "Escape") {
+//       document.getElementById("auth-popup").classList.add("hidden");
+//     }
+//   });
+
+//   document.getElementById("login-tab").addEventListener("click", () => {
+//     document.getElementById("login-form").classList.remove("hidden");
+//     document.getElementById("register-form").classList.add("hidden");
+//     document.getElementById("login-tab").classList.add("text-blue-500");
+//     document.getElementById("register-tab").classList.remove("text-blue-500");
+//   });
+
+//   document.getElementById("register-tab").addEventListener("click", () => {
+//     document.getElementById("login-form").classList.add("hidden");
+//     document.getElementById("register-form").classList.remove("hidden");
+//     document.getElementById("register-tab").classList.add("text-blue-500");
+//     document.getElementById("login-tab").classList.remove("text-blue-500");
+//   });
+
+//   document.getElementById("login-form").addEventListener("submit", onLogin);
+// }

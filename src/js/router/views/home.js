@@ -1,5 +1,5 @@
 import { fetchListings } from "../../api/listings/read";
-import { createListingCard } from "../../utils/listingCard";
+import { createListingCard } from "../../utils/createListingsCard";
 
 let currentPage = 1;
 const itemsPerPage = 12;
