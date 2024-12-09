@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script type="module" src="/src/app.js"></script>
+</head>
+
+<body>
+  <main class="max-w-lg mx-auto">
+    <form id="editListingForm" class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-lg space-y-6">
+      <h1 class="text-2xl font-semibold text-gray-700">Edit Listing</h1>
+
+      <div class="mb-4">
+        <label for="editTitle" class="block text-sm font-medium text-gray-700">Title</label>
+        <input id="editTitle" name="title" type="text" class="border p-2 w-full" placeholder="Enter title"
+          maxlength="280" required>
+      </div>
+
+      <div class="mb-4">
+        <label for="editBody" class="block text-sm font-medium text-gray-700">Description</label>
+        <div id="editEditor" contenteditable="true" class="border p-4 h-48 w-full mb-4"
+          placeholder="Write your content here..."></div>
+      </div>
+
+      <div class="mb-4">
+        <label for="editTags" class="block text-sm font-medium text-gray-700">Tags</label>
+        <input id="editTags" name="tags" type="text" class="border p-2 w-full"
+          placeholder="Enter tags (comma separated)" maxlength="24">
+      </div>
+
+      <div class="mb-4">
+        <label for="editEndsAt" class="block text-sm font-medium text-gray-700">Deadline</label>
+        <input id="editEndsAt" name="endsAt" type="datetime-local" class="border p-2 w-full" required>
+      </div>
+
+      <div class="mb-4">
+        <label for="editMedia" class="block text-sm font-medium text-gray-700">Image(s)</label>
+        <div id="editMediaContainer" class="space-y-4"></div>
+        <button id="addEditMediaButton" type="button" class="bg-blue-500 text-white p-2 rounded-sm w-full mt-2">Add
+          Media</button>
+      </div>
+
+      <button type="submit" class="bg-deepTeal text-white p-2 rounded-sm w-full mt-4">Submit Changes</button>
+    </form>
+  </main>
+</body>
+
+</html>

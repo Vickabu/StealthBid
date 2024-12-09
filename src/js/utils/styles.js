@@ -65,7 +65,7 @@ export const tabStyles = {
 
 export const formStyles = {
   container: ["w-full", "p-4"],
-  form: ["flex", "flex-col", "gap-2"],
+  signInform: ["flex", "flex-col", "gap-2"],
   input: ["form-input", "p-2", "border", "rounded"],
-  submitButton: ["bg-deepTeal", "text-white", "py-2", "rounded-sm"],
+  loginButton: ["bg-deepTeal", "text-white", "py-2", "rounded-sm"],
 };

@@ -1,6 +1,6 @@
 import { navbarStyles } from "./styles";
 import { createAuthModal } from "./authModal";
-import { logout } from "../ui/logout";
+import { logout } from "../ui/global/logout";
 
 /**
  * Creates a navbar with a Sign In button and a global authentication modal.

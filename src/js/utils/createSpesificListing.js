@@ -104,7 +104,7 @@ export function createListingDetailCard(listing) {
     "text-white",
     "py-3",
     "px-6",
-    "rounded-lg",
+    "rounded-sm",
     "hover:bg-freshSage",
     "w-full",
     "mb-6"
@@ -131,6 +131,9 @@ export function createListingDetailCard(listing) {
       "w-full"
     );
     editButton.textContent = "Edit Listing";
+    editButton.addEventListener("click", function () {
+      window.location.href = `/listing/edit?id=${listing.id}`;
+    });
     actionButtonsContainer.appendChild(editButton);
 
     const deleteButton = document.createElement("button");
@@ -156,12 +159,12 @@ export function createListingDetailCard(listing) {
 
   card.appendChild(contentSection);
 
-  card.addEventListener("click", (e) => {
-    if (!e.target.classList.contains("bid-button")) {
-      console.log(`Navigate to detailed listing ${listing.id}`);
-      window.location.href = `/listing/?id=${listing.id}`;
-    }
-  });
+  // card.addEventListener("click", (e) => {
+  //   if (!e.target.classList.contains("bid-button")) {
+  //     console.log(`Navigate to detailed listing ${listing.id}`);
+  //     window.location.href = `/listing/?id=${listing.id}`;
+  //   }
+  // });
 
   return card;
 }
