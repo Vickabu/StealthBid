@@ -1,5 +1,7 @@
 import { createNavbarAndModal } from "../utils/navbar.js";
 
+document.body.classList.add("bg-lightGrey");
+
 export default async function router(pathname = window.location.pathname) {
   createNavbarAndModal();
 
@@ -7,22 +9,17 @@ export default async function router(pathname = window.location.pathname) {
     case "/":
       await import("./views/home.js");
       break;
-    // case "/auth/":
-    //   await import("./views/auth.js");
-    //   break;
-    // case "/post/":
-    //   await import("./views/post.js");
-    //   break;
-    // case "/post/edit/":
-    //   await import("./views/postEdit.js");
-    //   break;
-    // case "/post/create/":
-    //   await import("./views/postCreate.js");
-    //   break;
-    // case "/profile/":
-    //   await import("./views/profile.js");
-    //   break;
-    // default:
-    //   await import("./views/notFound.js");
+    case "/profile/":
+      await import("./views/profile.js");
+      break;
+    case "/listing/":
+      await import("./views/listing.js");
+      break;
+    case "/listing/edit":
+      await import("./views/edit.js");
+      break;
+    case "/listing/create":
+      await import("./views/listingCreate.js");
+      break;
   }
 }
