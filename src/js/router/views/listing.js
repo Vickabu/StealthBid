@@ -1,5 +1,5 @@
 import { fetchListing } from "../../api/listings/read";
-import { createListingDetailCard } from "../../utils/CreateSpesificListing";
+import { createListingDetailCard } from "../../utils/createListingCard";
 import { hideLoader, showLoader } from "../../utils/loader";
 
 export async function fetchAndDisplayListing() {
