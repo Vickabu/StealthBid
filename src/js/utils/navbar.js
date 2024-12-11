@@ -93,7 +93,7 @@ function createNavbar() {
 /**
  * Opens the authentication modal.
  */
-function openAuthModal() {
+export function openAuthModal() {
   const modal = document.getElementById("auth-popup");
   modal.classList.remove("hidden");
 }

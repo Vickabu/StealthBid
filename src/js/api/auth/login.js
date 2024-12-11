@@ -25,6 +25,8 @@ export async function login({ email, password }) {
       "userInfo",
       JSON.stringify({ name, email, bio, avatar, banner })
     );
+    localStorage.setItem("isLoggedIn", "true");
+
     return data;
   } catch (error) {
     console.error("Login failed:", error);

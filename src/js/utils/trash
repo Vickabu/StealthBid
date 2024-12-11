@@ -1,3 +1,45 @@
+// export async function fetchListings(
+//   page = 1,
+//   limit = 12,
+//   tag = "",
+//   sort = "endsAt",
+//   sortOrder = "asc",
+//   active = true
+// ) {
+//   try {
+//     const url = new URL(API_LISTINGS);
+//     url.searchParams.append("_seller", "true");
+//     url.searchParams.append("_bids", "true");
+//     url.searchParams.append("page", page);
+//     url.searchParams.append("limit", limit);
+//     url.searchParams.append("tag", tag);
+//     url.searchParams.append("sort", sort);
+//     url.searchParams.append("sortOrder", sortOrder);
+
+//     // if (active) {
+//     //   url.searchParams.append("_active", "true");
+//     // }
+//     url.searchParams.append("_active", active ? "true" : "false");
+//     const response = await fetch(url.toString(), {
+//       method: "GET",
+//       headers: headers(),
+//     });
+
+//     if (!response.ok) {
+//       throw new Error(`API call failed: ${response.status}`);
+//     }
+
+//     const { data } = await response.json();
+//     console.log("Fetched data:", data);
+//     return data;
+//   } catch (error) {
+//     console.error("Error fetching listings:", error);
+//     return [];
+//   }
+// }
+
+/*__________________________________________________________________________
+
 // import { navbarStyles, modalStyles, tabStyles, formStyles } from "./styles";
 // import { onLogin } from "../api/auth/login";
 // /**
@@ -232,4 +274,72 @@
 //   });
 
 //   document.getElementById("login-form").addEventListener("submit", onLogin);
+// }
+
+// export async function fetchAndDisplayListings() {
+//   try {
+//     const listings = await fetchListings(currentPage, itemsPerPage);
+
+//     console.log("Fetched Listings:", listings);
+
+//     listings.sort((a, b) => {
+//       const timeRemainingA = calculateTimeRemaining(a.endsAt);
+//       const timeRemainingB = calculateTimeRemaining(b.endsAt);
+
+//       const timeA =
+//         timeRemainingA === "Expired"
+//           ? Infinity
+//           : parseTimeToMinutes(timeRemainingA);
+//       const timeB =
+//         timeRemainingB === "Expired"
+//           ? Infinity
+//           : parseTimeToMinutes(timeRemainingB);
+
+//       return timeA - timeB;
+//     });
+
+//     console.log("Active Listings after sorting:", listings);
+
+//     if (listings.length === 0) {
+//       console.warn("No active listings found!");
+//     }
+
+//     const listingsContainer = document.getElementById("listings-container");
+//     listingsContainer.innerHTML = "";
+
+//     listings.forEach((listing) => {
+//       const listingCard = createListingCard(listing);
+//       listingsContainer.appendChild(listingCard);
+//     });
+
+//     displayPagination();
+//   } catch (error) {
+//     console.error("Error fetching listings:", error);
+//   }
+// }
+
+// function displayPagination() {
+//   const paginationContainer = document.getElementById("pagination-container");
+//   paginationContainer.innerHTML = "";
+
+//   const prevButton = document.createElement("button");
+//   prevButton.textContent = "Previous";
+//   prevButton.disabled = currentPage === 1;
+//   prevButton.addEventListener("click", () => {
+//     if (currentPage > 1) {
+//       currentPage--;
+//       fetchAndDisplayListings();
+//     }
+//   });
+
+//   paginationContainer.appendChild(prevButton);
+
+//   const nextButton = document.createElement("button");
+//   nextButton.textContent = "Next";
+//   nextButton.addEventListener("click", () => {
+//     currentPage++;
+//     fetchAndDisplayListings();
+//   });
+
+//   paginationContainer.appendChild(nextButton);
 // }

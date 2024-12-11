@@ -1,8 +1,6 @@
-import {
-  createImageCarousel,
-  calculateTimeRemaining,
-} from "./createListingsCard";
-import { onDeletePost } from "../api/listings/delete";
+import { createImageCarousel } from "./createListingsCard";
+import { calculateTimeRemaining } from "./timeManagement";
+import { onDeleteListing } from "../ui/listing/delete";
 import { createSellerCard } from "./sellerCard";
 
 export function createListingDetailCard(listing) {
@@ -148,7 +146,7 @@ export function createListingDetailCard(listing) {
     );
     deleteButton.textContent = "Delete Listing";
     deleteButton.dataset.listingId = id;
-    deleteButton.addEventListener("click", onDeletePost);
+    deleteButton.addEventListener("click", onDeleteListing);
     actionButtonsContainer.appendChild(deleteButton);
   }
 

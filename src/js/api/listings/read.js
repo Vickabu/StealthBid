@@ -1,4 +1,4 @@
-import { API_LISTINGS } from "../constant";
+import { API_LISTINGS, API_LISTINGS_SEARCH } from "../constant";
 import { headers } from "../headers";
 
 export async function fetchListings(
@@ -18,10 +18,42 @@ export async function fetchListings(
     url.searchParams.append("tag", tag);
     url.searchParams.append("sort", sort);
     url.searchParams.append("sortOrder", sortOrder);
+    url.searchParams.append("_active", active ? "true" : "false");
 
-    if (active) {
-      url.searchParams.append("_active", "true");
+    const response = await fetch(url.toString(), {
+      method: "GET",
+      headers: headers(),
+    });
+
+    if (!response.ok) {
+      throw new Error(`API call failed: ${response.status}`);
     }
+
+    const { data } = await response.json();
+    console.log("Fetched data:", data);
+    return data;
+  } catch (error) {
+    console.error("Error fetching listings:", error);
+    return [];
+  }
+}
+
+export async function fetchSearchListings(
+  query,
+  page = 1,
+  limit = 12,
+  sort = "endsAt",
+  sortOrder = "asc"
+) {
+  try {
+    const url = new URL(API_LISTINGS_SEARCH);
+    url.searchParams.append("sort", sort);
+    url.searchParams.append("sortOrder", sortOrder);
+    url.searchParams.append("limit", limit);
+    url.searchParams.append("page", page);
+    url.searchParams.append("q", encodeURIComponent(query));
+
+    console.log("Final URL:", url.toString());
 
     const response = await fetch(url.toString(), {
       method: "GET",
