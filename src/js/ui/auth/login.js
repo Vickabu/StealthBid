@@ -1,4 +1,5 @@
 import { login } from "../../api/auth/login";
+import { hideLoader, showLoader } from "../../utils/loader";
 import { validateField } from "../../utils/validate";
 
 export async function onLogin(event) {
@@ -7,6 +8,7 @@ export async function onLogin(event) {
   const email = document.getElementById("login-email").value.trim();
   const password = document.getElementById("login-password").value.trim();
 
+  showLoader();
   try {
     validateField(email, "email");
     validateField(password, "password");
@@ -14,6 +16,7 @@ export async function onLogin(event) {
       email,
       password,
     });
+    hideLoader();
     window.location.href = "/";
   } catch (error) {
     alert(`Login failed: ${error.message}`);

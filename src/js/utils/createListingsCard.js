@@ -95,7 +95,7 @@ export function createListingCard(listing) {
       window.location.href = `/listing/?id=${listing.id}`;
     }
   });
-
+  console.log(listing);
   return card;
 }
 

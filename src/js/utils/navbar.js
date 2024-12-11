@@ -51,6 +51,7 @@ function createNavbar() {
     const parsedUserInfo = JSON.parse(userInfo);
     const avatarUrl = parsedUserInfo.avatar.url;
     const avatarAlt = parsedUserInfo.avatar.alt;
+    const userName = parsedUserInfo.name;
 
     authButton.textContent = "Log Out";
     authButton.classList.add(...navbarStyles.logoutButton);
@@ -67,7 +68,8 @@ function createNavbar() {
     profileButton.appendChild(avatarImage);
 
     profileButton.addEventListener("click", () => {
-      window.location.href = "/profile/";
+      window.location.href = `/profile/?name=${userName}`;
+      console.log(`/profile/?name=${userName}`);
     });
 
     const createListingLink = document.createElement("a");

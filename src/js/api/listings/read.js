@@ -1,4 +1,8 @@
-import { API_LISTINGS, API_LISTINGS_SEARCH } from "../constant";
+import {
+  API_LISTINGS,
+  API_LISTINGS_SEARCH,
+  API_AUCTION_PROFILES,
+} from "../constant";
 import { headers } from "../headers";
 
 export async function fetchListings(
@@ -94,5 +98,24 @@ export async function fetchListing(id) {
   } catch (error) {
     console.error("Error fetching listing:", error);
     return null;
+  }
+}
+
+export async function fetchUserListings(name) {
+  try {
+    const response = await fetch(`${API_AUCTION_PROFILES}/${name}/listings`, {
+      method: "GET",
+      headers: headers(),
+    });
+
+    if (!response.ok) {
+      throw new Error(`Failed to fetch user listings: ${response.status}`);
+    }
+
+    const listingsData = await response.json();
+    return listingsData;
+  } catch (error) {
+    console.error("Error fetching user listings:", error);
+    throw error;
   }
 }

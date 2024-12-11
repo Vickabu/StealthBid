@@ -1,4 +1,5 @@
 import { register } from "../../api/auth/register";
+import { hideLoader, showLoader } from "../../utils/loader";
 import { validateField } from "../../utils/validate";
 
 export async function onRegister(event) {
@@ -16,6 +17,8 @@ export async function onRegister(event) {
     return;
   }
 
+  showLoader();
+
   try {
     validateField(name, "name");
     validateField(email, "email");
@@ -23,6 +26,7 @@ export async function onRegister(event) {
     validateField(confirmPassword, "confirmPassword", password);
 
     await register({ name, email, password });
+    hideLoader();
   } catch (error) {
     console.error("Registration failed:", error);
     alert(`Validation Error: ${error.message}`);

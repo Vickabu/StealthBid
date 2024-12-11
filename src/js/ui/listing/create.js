@@ -1,5 +1,6 @@
 import { toggleMediaError } from "../../utils/mediaHandler";
 import { createListing } from "../../api/listings/create";
+import { hideLoader, showLoader } from "../../utils/loader";
 
 export async function onCreateListing(event) {
   event.preventDefault();
@@ -31,6 +32,7 @@ export async function onCreateListing(event) {
   console.log("Collected media:", media);
 
   try {
+    showLoader();
     await createListing({ title, description: body, tags, endsAt, media });
 
     event.target.reset();
@@ -40,5 +42,7 @@ export async function onCreateListing(event) {
     window.location.href = "/";
   } catch (error) {
     console.error("Error while creating:", error);
+  } finally {
+    hideLoader();
   }
 }

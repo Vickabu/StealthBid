@@ -65,5 +65,9 @@ export function createSellerCard(seller) {
   sellerCard.appendChild(sellerNameElement);
   sellerCard.appendChild(bioElement);
 
+  sellerCard.addEventListener("click", () => {
+    window.location.href = `/profile/?name=${seller.name}`;
+  });
+
   return sellerCard;
 }
