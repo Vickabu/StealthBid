@@ -1,3 +1,11 @@
+// export function updateLoader(isVisible) {
+//   if (isVisible) {
+//     showLoader();
+//   } else {
+//     hideLoader();
+//   }
+// }
+
 export function showLoader() {
   const loader = document.createElement("div");
   loader.id = "loader";
@@ -13,7 +21,7 @@ export function showLoader() {
     "flex",
     "justify-center",
     "items-center",
-    "z-50"
+    "z-50",
   );
 
   const spinner = document.createElement("div");
@@ -25,7 +33,7 @@ export function showLoader() {
     "rounded-full",
     "w-12",
     "h-12",
-    "animate-spin"
+    "animate-spin",
   );
   loader.appendChild(spinner);
   document.body.appendChild(loader);
