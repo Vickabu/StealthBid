@@ -2,7 +2,7 @@ import { fetchListing } from "../../api/listings/read";
 import { createListingDetailCard } from "../../utils/createListingCard";
 import { hideLoader, showLoader } from "../../utils/loader";
 
-export async function fetchAndDisplayListing() {
+export async function displayListing() {
   try {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
@@ -30,4 +30,4 @@ export async function fetchAndDisplayListing() {
   }
 }
 
-fetchAndDisplayListing();
+displayListing();

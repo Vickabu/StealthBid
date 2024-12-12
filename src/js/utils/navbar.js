@@ -11,7 +11,7 @@ import { logout } from "../ui/global/logout";
  * document.body.appendChild(navbar);
  */
 
-export function createNavbarAndModal() {
+export async function createNavbarAndModal() {
   const navbar = createNavbar();
   const modal = createAuthModal();
 
