@@ -22,7 +22,6 @@ async function displayProfilePage() {
       throw new Error("Invalid profile data structure");
     }
 
-    // Fetch user's listings
     const listingsResponse = await fetchUserListings(userName);
     console.log("User Listings:", listingsResponse);
 

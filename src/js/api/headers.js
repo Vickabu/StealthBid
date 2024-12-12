@@ -9,7 +9,7 @@ export function headers() {
     headers.append("X-Noroff-API-Key", API_KEY);
   }
 
-  const accessToken = localStorage.accessToken;
+  const accessToken = localStorage.getItem("accessToken");
   console.log(accessToken);
 
   if (accessToken) {
