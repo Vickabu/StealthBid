@@ -7,10 +7,12 @@ export function createListingCard(listing) {
   const highestBid =
     bids.length > 0
       ? `Highest Bid: ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(Math.max(...bids.map((bid) => bid.amount)))}`
-      : "No bids yet";
+      : "No bids";
 
   const timeRemaining = calculateTimeRemaining(endsAt);
-  const isExpired = timeRemaining === "Expired";
+
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const isOwner = userInfo?.name === sellerName;
 
   const card = document.createElement("div");
   card.classList.add(
@@ -23,7 +25,8 @@ export function createListingCard(listing) {
     "cursor-pointer",
     "flex",
     "flex-col",
-    "min-h-[485px]"
+    "min-h-[485px]",
+    "relative",
   );
 
   const imageCarousel = createImageCarousel(media);
@@ -41,24 +44,12 @@ export function createListingCard(listing) {
   sellerElement.classList.add("text-sm", "text-gray-500", "mb-4");
   sellerElement.textContent = `@${sellerName}`;
 
-  const bidButton = document.createElement("button");
-  bidButton.classList.add(
-    "bg-freshSage",
-    "py-2",
-    "px-4",
-    "rounded-sm",
-    "hover:bg-deepTeal",
-    "bid-button",
-    "w-full"
-  );
-  bidButton.textContent = "Place A Bid";
-
   const bidInfoContainer = document.createElement("div");
   bidInfoContainer.classList.add(
     "flex",
     "justify-between",
     "items-center",
-    "mb-6"
+    "mb-6",
   );
 
   const highestBidElement = document.createElement("span");
@@ -76,16 +67,30 @@ export function createListingCard(listing) {
   cardContent.classList.add("p-4", "flex-grow");
   cardContent.append(titleElement, descriptionElement, sellerElement);
 
+  if (isOwner) {
+    const yourListingBadge = document.createElement("div");
+    yourListingBadge.classList.add(
+      "absolute",
+      "top",
+      "right-0",
+      "bg-deepTeal",
+      "text-white",
+      "px-3",
+      "py-1",
+      "text-sm",
+      "rounded-sm",
+      "shadow-md",
+    );
+    yourListingBadge.textContent = "Your Listing";
+    card.appendChild(yourListingBadge);
+  }
+
   card.appendChild(cardContent);
 
   const buttonContainer = document.createElement("div");
   buttonContainer.classList.add("p-4", "mt-auto");
 
   buttonContainer.appendChild(bidInfoContainer);
-
-  if (!isExpired) {
-    buttonContainer.appendChild(bidButton);
-  }
 
   card.appendChild(buttonContainer);
 
@@ -95,6 +100,7 @@ export function createListingCard(listing) {
       window.location.href = `/listing/?id=${listing.id}`;
     }
   });
+
   console.log(listing);
   return card;
 }
@@ -106,7 +112,7 @@ export function createImageCarousel(media) {
     "h-48",
     "bg-gray-200",
     "overflow-hidden",
-    "relative"
+    "relative",
   );
 
   if (media && media.length > 0) {
@@ -128,7 +134,7 @@ export function createImageCarousel(media) {
         "object-cover",
         "transition-opacity",
         "duration-500",
-        index === 0 ? "opacity-100" : "opacity-0"
+        index === 0 ? "opacity-100" : "opacity-0",
       );
       img.dataset.index = index;
       imageWrapper.appendChild(img);
@@ -149,7 +155,7 @@ export function createImageCarousel(media) {
         "p-2",
         "rounded-sm",
         "z-10",
-        "hover:bg-gray-700"
+        "hover:bg-gray-700",
       );
       prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
 
@@ -165,7 +171,7 @@ export function createImageCarousel(media) {
         "p-2",
         "rounded-sm",
         "z-10",
-        "hover:bg-gray-700"
+        "hover:bg-gray-700",
       );
       nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
 
@@ -208,7 +214,7 @@ export function createImageCarousel(media) {
         "transform",
         "-translate-x-1/2",
         "flex",
-        "space-x-2"
+        "space-x-2",
       );
 
       media.forEach((_, index) => {
@@ -218,7 +224,7 @@ export function createImageCarousel(media) {
           "h-2",
           "rounded-full",
           "bg-deepTeal",
-          "opacity-50"
+          "opacity-50",
         );
         dot.dataset.index = index;
         dotsContainer.appendChild(dot);
