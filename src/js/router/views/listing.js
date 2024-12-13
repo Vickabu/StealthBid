@@ -7,13 +7,13 @@ export async function displayListing() {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
 
-    console.log("Fetching listing with ID:", id);
     if (!id) {
       throw new Error("No listing ID provided.");
     }
 
     showLoader();
     const listing = await fetchListing(id);
+    console.log(listing);
     if (!listing) {
       console.error("Listing not found or error occurred");
       return;

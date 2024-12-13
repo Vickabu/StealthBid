@@ -36,8 +36,6 @@ export async function onUpdateProfile(event, userName, refreshProfile) {
     bio: bio,
   };
 
-  console.log("Updated Profile Data:", updatedProfile);
-
   try {
     await updateProfile(updatedProfile, userName);
     alert("Profile updated successfully!");

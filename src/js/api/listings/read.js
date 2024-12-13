@@ -11,7 +11,7 @@ export async function fetchListings(
   tag = "",
   sort = "endsAt",
   sortOrder = "asc",
-  active = true
+  active = true,
 ) {
   try {
     const url = new URL(API_LISTINGS);
@@ -34,7 +34,6 @@ export async function fetchListings(
     }
 
     const { data } = await response.json();
-    console.log("Fetched data:", data);
     return data;
   } catch (error) {
     console.error("Error fetching listings:", error);
@@ -47,7 +46,7 @@ export async function fetchSearchListings(
   page = 1,
   limit = 12,
   sort = "endsAt",
-  sortOrder = "asc"
+  sortOrder = "asc",
 ) {
   try {
     const url = new URL(API_LISTINGS_SEARCH);
@@ -56,8 +55,6 @@ export async function fetchSearchListings(
     url.searchParams.append("limit", limit);
     url.searchParams.append("page", page);
     url.searchParams.append("q", encodeURIComponent(query));
-
-    console.log("Final URL:", url.toString());
 
     const response = await fetch(url.toString(), {
       method: "GET",
@@ -69,7 +66,6 @@ export async function fetchSearchListings(
     }
 
     const { data } = await response.json();
-    console.log("Fetched data:", data);
     return data;
   } catch (error) {
     console.error("Error fetching listings:", error);
@@ -93,7 +89,6 @@ export async function fetchListing(id) {
     }
 
     const { data } = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching listing:", error);

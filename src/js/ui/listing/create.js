@@ -4,7 +4,6 @@ import { hideLoader, showLoader } from "../../utils/loader";
 
 export async function onCreateListing(event) {
   event.preventDefault();
-  console.log("Submit clicked!");
 
   const title = event.target.title.value.trim();
   const body = document.getElementById("editor").innerText.trim();
@@ -28,8 +27,6 @@ export async function onCreateListing(event) {
       });
     }
   });
-
-  console.log("Collected media:", media);
 
   try {
     showLoader();

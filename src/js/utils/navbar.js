@@ -69,7 +69,6 @@ function createNavbar() {
 
     profileButton.addEventListener("click", () => {
       window.location.href = `/profile/?name=${userName}`;
-      console.log(`/profile/?name=${userName}`);
     });
 
     const createListingLink = document.createElement("a");

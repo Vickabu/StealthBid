@@ -10,7 +10,6 @@ export function headers() {
   }
 
   const accessToken = localStorage.getItem("accessToken");
-  console.log(accessToken);
 
   if (accessToken) {
     headers.append("Authorization", `Bearer ${accessToken}`);

@@ -1,8 +1,8 @@
-import { createImageCarousel } from "./createListingsCard";
 import { calculateTimeRemaining } from "./timeManagement";
 import { onDeleteListing } from "../ui/listing/delete";
 import { createSellerCard } from "./sellerCard";
 import { onBidListing } from "../api/listings/bid";
+import { createImageCarousel } from "./imageCarousel";
 
 export function createListingDetailCard(listing) {
   const { title, description, media, seller, bids = [], endsAt, id } = listing;
@@ -76,7 +76,7 @@ export function createListingDetailCard(listing) {
   const bidInfoContainer = document.createElement("div");
   bidInfoContainer.classList.add(
     "flex",
-    "justify-evenly",
+    "justify-between",
     "items-center",
     "mb-6",
   );
@@ -92,43 +92,67 @@ export function createListingDetailCard(listing) {
       : "No bids yet";
 
   const timeRemainingElement = document.createElement("span");
-  timeRemainingElement.classList.add("text-sm", "text-gray-500", "mb-auto");
+  timeRemainingElement.classList.add(
+    "text-sm",
+    "text-gray-500",
+    "mb-auto",
+    "text-right",
+  );
   timeRemainingElement.innerHTML = "Time Remaining:<br>" + timeRemaining;
 
   bidInfoContainer.append(highestBidElement, timeRemainingElement);
 
-  // Input field for bid amount
-  const bidInput = document.createElement("input");
-  bidInput.type = "number";
-  bidInput.name = "bidAmount";
-  bidInput.placeholder = "Enter your bid amount";
-  bidInput.classList.add(
-    "w-full",
-    "border",
-    "border-gray-300",
-    "rounded-sm",
-    "p-3",
-    "mb-4",
-  );
-  bidInput.min = 1;
+  actionsSection.append(bidInfoContainer);
 
-  const bidButton = document.createElement("button");
-  bidButton.classList.add(
-    "bg-deepTeal",
-    "text-white",
-    "py-3",
-    "px-6",
-    "rounded-sm",
-    "hover:bg-freshSage",
-    "w-full",
-    "mb-6",
-  );
-  bidButton.textContent = "Place A Bid";
+  if (bids.length > 0) {
+    const viewBidsButton = document.createElement("button");
+    viewBidsButton.classList.add(
+      "bg-deepTeal",
+      "text-white",
+      "py-2",
+      "px-4",
+      "rounded-sm",
+      "hover:bg-freshSage",
+      "w-full",
+      "mb-6",
+    );
+    viewBidsButton.textContent = "View Bids";
 
-  if (isExpired) {
-    bidButton.classList.add("opacity-50", "cursor-not-allowed");
-    bidButton.disabled = true;
-  } else {
+    viewBidsButton.addEventListener("click", () => {
+      showBidsPopup(bids, title);
+    });
+
+    actionsSection.appendChild(viewBidsButton);
+  }
+
+  if (!isExpired && !isCurrentUserSeller) {
+    const bidInput = document.createElement("input");
+    bidInput.type = "number";
+    bidInput.name = "bidAmount";
+    bidInput.placeholder = "Enter your bid amount";
+    bidInput.classList.add(
+      "w-full",
+      "border",
+      "border-gray-300",
+      "rounded-sm",
+      "p-3",
+      "mb-4",
+    );
+    bidInput.min = 1;
+
+    const bidButton = document.createElement("button");
+    bidButton.classList.add(
+      "bg-deepTeal",
+      "text-white",
+      "py-3",
+      "px-6",
+      "rounded-sm",
+      "hover:bg-freshSage",
+      "w-full",
+      "mb-6",
+    );
+    bidButton.textContent = "Place A Bid";
+
     bidButton.addEventListener("click", async (event) => {
       event.preventDefault();
       const bidAmount = parseFloat(bidInput.value);
@@ -141,13 +165,14 @@ export function createListingDetailCard(listing) {
       try {
         await onBidListing(id, bidAmount);
         alert("Bid placed successfully!");
-        // Optionally, refresh the listing or update the bid display
-        bidInput.value = ""; // Clear input field after successful bid
+        bidInput.value = "";
       } catch (error) {
         console.error("Failed to place bid:", error);
         alert("Error placing bid. Please try again.");
       }
     });
+
+    actionsSection.append(bidInput, bidButton);
   }
 
   const actionButtonsContainer = document.createElement("div");
@@ -160,7 +185,7 @@ export function createListingDetailCard(listing) {
       "text-white",
       "py-2",
       "px-6",
-      "rounded-lg",
+      "rounded-sm",
       "hover:bg-red-600",
       "w-full",
     );
@@ -170,12 +195,7 @@ export function createListingDetailCard(listing) {
     actionButtonsContainer.appendChild(deleteButton);
   }
 
-  actionsSection.append(
-    bidInfoContainer,
-    bidInput,
-    bidButton,
-    actionButtonsContainer,
-  );
+  actionsSection.append(actionButtonsContainer);
 
   contentSection.appendChild(detailsSection);
   contentSection.appendChild(actionsSection);
@@ -185,171 +205,98 @@ export function createListingDetailCard(listing) {
   return card;
 }
 
-// import { createImageCarousel } from "./createListingsCard";
-// import { calculateTimeRemaining } from "./timeManagement";
-// import { onDeleteListing } from "../ui/listing/delete";
-// import { createSellerCard } from "./sellerCard";
+function showBidsPopup(bids, title) {
+  const overlay = document.createElement("div");
+  overlay.classList.add(
+    "fixed",
+    "inset-0",
+    "bg-black",
+    "bg-opacity-50",
+    "flex",
+    "items-center",
+    "justify-center",
+    "z-50",
+  );
 
-// export function createListingDetailCard(listing) {
-//   const { title, description, media, seller, bids = [], endsAt, id } = listing;
+  const popup = document.createElement("div");
+  popup.classList.add(
+    "bg-white",
+    "rounded-lg",
+    "p-6",
+    "max-w-lg",
+    "w-full",
+    "mb-4",
+  );
 
-//   const timeRemaining = calculateTimeRemaining(endsAt);
-//   const isExpired = timeRemaining === "Expired";
+  const headline = document.createElement("h2");
+  headline.classList.add("text-xl", "font-bold", "mb-4", "text-center");
+  headline.textContent = `All bids on "${title}"`;
 
-//   const currentUser = JSON.parse(localStorage.getItem("userInfo"));
+  const hr = document.createElement("hr");
+  hr.classList.add("mt-4");
+  headline.append(hr);
 
-//   const isCurrentUserSeller =
-//     currentUser &&
-//     seller &&
-//     currentUser.name &&
-//     seller.name &&
-//     currentUser.email &&
-//     seller.email &&
-//     currentUser.name === seller.name &&
-//     currentUser.email === seller.email;
+  const bidsList = document.createElement("ul");
+  bids
+    .sort((a, b) => b.amount - a.amount)
+    .forEach((bid) => {
+      const listItem = document.createElement("li");
+      listItem.classList.add("mb-4", "mt-4");
 
-//   const card = document.createElement("div");
-//   card.classList.add(
-//     "bg-white",
-//     "rounded-sm",
-//     "shadow-lg",
-//     "overflow-hidden",
-//     "flex",
-//     "flex-col",
-//     "max-w-xl",
-//     "lg:max-w-4xl",
-//     "mx-auto",
-//     "my-8",
-//     "p-6"
-//   );
+      const avatar = document.createElement("img");
+      avatar.src = bid.bidder.avatar.url;
+      avatar.alt = bid.bidder.name;
+      avatar.classList.add(
+        "w-8",
+        "h-8",
+        "rounded-full",
+        "inline-block",
+        "mr-3",
+      );
 
-//   const imageCarousel = createImageCarousel(media);
-//   imageCarousel.classList.add(
-//     "w-full",
-//     "h-80",
-//     "object-cover",
-//     "justify-center"
-//   );
-//   card.appendChild(imageCarousel);
+      const name = document.createElement("span");
+      name.classList.add("font-semibold");
+      name.textContent = bid.bidder.name;
 
-//   const contentSection = document.createElement("div");
-//   contentSection.classList.add(
-//     "flex",
-//     "flex-col",
-//     "md:flex-row",
-//     "gap-6",
-//     "mt-6"
-//   );
+      const amount = document.createElement("span");
+      amount.classList.add("text-deepTeal", "font-bold", "ml-3");
+      amount.textContent = new Intl.NumberFormat("en-US", {
+        style: "currency",
+        currency: "USD",
+      }).format(bid.amount);
 
-//   const detailsSection = document.createElement("div");
-//   detailsSection.classList.add("flex-1");
+      const created = document.createElement("span");
+      created.classList.add("text-gray-500", "ml-3", "text-sm");
+      const bidTime = new Date(bid.created);
+      const formattedTime = `${bidTime.getHours()}:${String(
+        bidTime.getMinutes(),
+      ).padStart(2, "0")}`;
+      created.textContent = `Placed at ${formattedTime}`;
 
-//   const titleElement = document.createElement("h1");
-//   titleElement.classList.add("text-3xl", "font-semibold", "mb-4");
-//   titleElement.textContent = title;
+      listItem.append(avatar, name, amount, created);
+      bidsList.appendChild(listItem);
 
-//   const descriptionElement = document.createElement("p");
-//   descriptionElement.classList.add("text-gray-700", "mb-6");
-//   descriptionElement.textContent = description || "No description available.";
+      const hr = document.createElement("hr");
+      bidsList.appendChild(hr);
+    });
 
-//   const sellerCardElement = createSellerCard(seller);
+  const closeButton = document.createElement("button");
+  closeButton.classList.add(
+    "bg-red-500",
+    "text-white",
+    "py-2",
+    "px-4",
+    "rounded-sm",
+    "hover:bg-red-600",
+    "mt-4",
+    "w-full",
+  );
+  closeButton.textContent = "Close";
+  closeButton.addEventListener("click", () => {
+    document.body.removeChild(overlay);
+  });
 
-//   detailsSection.append(titleElement, descriptionElement, sellerCardElement);
-
-//   const actionsSection = document.createElement("div");
-//   actionsSection.classList.add("w-full", "md:w-72", "flex-shrink-0");
-
-//   const bidInfoContainer = document.createElement("div");
-//   bidInfoContainer.classList.add(
-//     "flex",
-//     "justify-evenly",
-//     "items-center",
-//     "mb-6"
-//   );
-
-//   const highestBidElement = document.createElement("span");
-//   highestBidElement.classList.add("font-bold", "text-xl", "text-deepTeal");
-//   highestBidElement.innerHTML =
-//     bids.length > 0
-//       ? `Highest Bid:<br>${new Intl.NumberFormat("en-US", {
-//           style: "currency",
-//           currency: "USD",
-//         }).format(Math.max(...bids.map((bid) => bid.amount)))}`
-//       : "No bids yet";
-
-//   const timeRemainingElement = document.createElement("span");
-//   timeRemainingElement.classList.add("text-sm", "text-gray-500", "mb-auto");
-//   timeRemainingElement.innerHTML = "Time Remaining:<br>" + timeRemaining;
-
-//   bidInfoContainer.append(highestBidElement, timeRemainingElement);
-
-//   const bidButton = document.createElement("button");
-//   bidButton.classList.add(
-//     "bg-deepTeal",
-//     "text-white",
-//     "py-3",
-//     "px-6",
-//     "rounded-sm",
-//     "hover:bg-freshSage",
-//     "w-full",
-//     "mb-6"
-//   );
-//   bidButton.textContent = "Place A Bid";
-
-//   if (isExpired) {
-//     bidButton.classList.add("opacity-50", "cursor-not-allowed");
-//     bidButton.disabled = true;
-//   }
-
-//   const actionButtonsContainer = document.createElement("div");
-//   actionButtonsContainer.classList.add("space-y-4");
-
-//   if (isCurrentUserSeller) {
-//     const editButton = document.createElement("button");
-//     editButton.classList.add(
-//       "bg-blue-500",
-//       "text-white",
-//       "py-2",
-//       "px-6",
-//       "rounded-lg",
-//       "hover:bg-blue-600",
-//       "w-full"
-//     );
-//     // editButton.textContent = "Edit Listing";
-//     // editButton.addEventListener("click", function () {
-//     //   window.location.href = `/listing/edit?id=${listing.id}`;
-//     // });
-//     // actionButtonsContainer.appendChild(editButton);
-
-//     const deleteButton = document.createElement("button");
-//     deleteButton.classList.add(
-//       "bg-red-500",
-//       "text-white",
-//       "py-2",
-//       "px-6",
-//       "rounded-lg",
-//       "hover:bg-red-600",
-//       "w-full"
-//     );
-//     deleteButton.textContent = "Delete Listing";
-//     deleteButton.dataset.listingId = id;
-//     deleteButton.addEventListener("click", onDeleteListing);
-//     actionButtonsContainer.appendChild(deleteButton);
-//   }
-
-//   actionsSection.append(bidInfoContainer, bidButton, actionButtonsContainer);
-
-//   contentSection.appendChild(detailsSection);
-//   contentSection.appendChild(actionsSection);
-
-//   card.appendChild(contentSection);
-
-//   // card.addEventListener("click", (e) => {
-//   //   if (!e.target.classList.contains("bid-button")) {
-//   //     console.log(`Navigate to detailed listing ${listing.id}`);
-//   //     window.location.href = `/listing/?id=${listing.id}`;
-//   //   }
-//   // });
-
-//   return card;
-// }
+  popup.append(headline, bidsList, closeButton);
+  overlay.appendChild(popup);
+  document.body.appendChild(overlay);
+}

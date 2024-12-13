@@ -4,8 +4,6 @@ import { createListingCard } from "../../utils/createListingsCard";
 import { onUpdateProfile } from "../../api/profile/update";
 
 async function displayProfilePage() {
-  console.log("Display Profile Page Function Loaded");
-
   const urlParams = new URLSearchParams(window.location.search);
   const userName = urlParams.get("name");
 
@@ -16,15 +14,12 @@ async function displayProfilePage() {
 
   try {
     const profileResponse = await readProfile(userName);
-    console.log("Profile Response:", profileResponse);
-
     const profileData = profileResponse.data;
     if (!profileData) {
       throw new Error("Invalid profile data structure");
     }
 
     const listingsResponse = await fetchUserListings(userName);
-    console.log("User Listings:", listingsResponse);
 
     const listingsData = listingsResponse.data;
     if (!listingsData) {
