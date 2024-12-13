@@ -26,6 +26,8 @@ export async function createNavbarAndModal() {
  */
 
 function createNavbar() {
+  const header = document.createElement("header");
+
   const navbar = document.createElement("nav");
   navbar.classList.add(...navbarStyles.container);
 
@@ -88,7 +90,9 @@ function createNavbar() {
   innerContainer.append(logo, rightContainer);
   navbar.appendChild(innerContainer);
 
-  return navbar;
+  header.append(navbar);
+
+  return header;
 }
 
 /**
