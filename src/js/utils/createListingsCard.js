@@ -11,6 +11,11 @@ export function createListingCard(listing) {
   const timeRemaining = calculateTimeRemaining(endsAt);
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const loggedInUserName = userInfo?.name;
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const userNameInUrl = urlParams.get("name");
+
   const isOwner = userInfo?.name === sellerName;
 
   const card = document.createElement("div");
@@ -24,7 +29,7 @@ export function createListingCard(listing) {
     "cursor-pointer",
     "flex",
     "flex-col",
-    "min-h-[485px]",
+    "min-h-[450px]",
     "relative",
   );
 
@@ -39,16 +44,13 @@ export function createListingCard(listing) {
   descriptionElement.classList.add("text-gray-600", "mb-4");
   descriptionElement.textContent = description || "No description available.";
 
-  const sellerElement = document.createElement("div");
-  sellerElement.classList.add("text-sm", "text-gray-500", "mb-4");
-  sellerElement.textContent = `@${sellerName}`;
-
   const bidInfoContainer = document.createElement("div");
   bidInfoContainer.classList.add(
     "flex",
     "justify-between",
     "items-center",
-    "mb-6",
+    "p-4",
+    "mt-auto",
   );
 
   const highestBidElement = document.createElement("span");
@@ -63,8 +65,15 @@ export function createListingCard(listing) {
   bidInfoContainer.appendChild(timeRemainingElement);
 
   const cardContent = document.createElement("div");
-  cardContent.classList.add("p-4", "flex-grow");
-  cardContent.append(titleElement, descriptionElement, sellerElement);
+  cardContent.classList.add("px-4", "py-2", "flex-grow");
+  cardContent.append(titleElement, descriptionElement);
+
+  if (userNameInUrl !== loggedInUserName) {
+    const sellerElement = document.createElement("div");
+    sellerElement.classList.add("text-sm", "text-gray-500", "mb-4");
+    sellerElement.textContent = `@${sellerName}`;
+    cardContent.appendChild(sellerElement);
+  }
 
   if (isOwner) {
     const yourListingBadge = document.createElement("div");
@@ -86,16 +95,10 @@ export function createListingCard(listing) {
 
   card.appendChild(cardContent);
 
-  const buttonContainer = document.createElement("div");
-  buttonContainer.classList.add("p-4", "mt-auto");
+  card.appendChild(bidInfoContainer);
 
-  buttonContainer.appendChild(bidInfoContainer);
-  card.appendChild(buttonContainer);
-
-  card.addEventListener("click", (e) => {
-    if (!e.target.classList.contains("bid-button")) {
-      window.location.href = `/listing/?id=${listing.id}`;
-    }
+  cardContent.addEventListener("click", () => {
+    window.location.href = `/listing/?id=${listing.id}`;
   });
 
   return card;

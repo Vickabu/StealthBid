@@ -1,7 +1,7 @@
 import { calculateTimeRemaining } from "./timeManagement";
 import { onDeleteListing } from "../ui/listing/delete";
 import { createSellerCard } from "./sellerCard";
-import { onBidListing } from "../api/listings/bid";
+import { onBidListing } from "../ui/listing/bid";
 import { createImageCarousel } from "./imageCarousel";
 
 export function createListingDetailCard(listing) {
@@ -30,20 +30,15 @@ export function createListingDetailCard(listing) {
     "overflow-hidden",
     "flex",
     "flex-col",
-    "max-w-xl",
-    "lg:max-w-4xl",
+    "w-full",
+    "max-w-screen-lg",
     "mx-auto",
-    "my-8",
-    "p-6",
+    "mt-10",
+    "font-primary",
   );
 
   const imageCarousel = createImageCarousel(media);
-  imageCarousel.classList.add(
-    "w-full",
-    "h-80",
-    "object-cover",
-    "justify-center",
-  );
+  imageCarousel.classList.add("w-full", "h-96", "object-cover");
   card.appendChild(imageCarousel);
 
   const contentSection = document.createElement("div");
@@ -53,6 +48,8 @@ export function createListingDetailCard(listing) {
     "md:flex-row",
     "gap-6",
     "mt-6",
+    "my-8",
+    "p-6",
   );
 
   const detailsSection = document.createElement("div");
@@ -107,12 +104,14 @@ export function createListingDetailCard(listing) {
   if (bids.length > 0) {
     const viewBidsButton = document.createElement("button");
     viewBidsButton.classList.add(
-      "bg-deepTeal",
-      "text-white",
+      "bg-freshSage",
+      "font-bold",
+      "border",
+      "border-deepTeal",
       "py-2",
       "px-4",
       "rounded-sm",
-      "hover:bg-freshSage",
+      "hover:bg-freshSage/80",
       "w-full",
       "mb-6",
     );
@@ -147,7 +146,7 @@ export function createListingDetailCard(listing) {
       "py-3",
       "px-6",
       "rounded-sm",
-      "hover:bg-freshSage",
+      "hover:bg-deepTeal/85",
       "w-full",
       "mb-6",
     );
@@ -237,11 +236,15 @@ function showBidsPopup(bids, title) {
   headline.append(hr);
 
   const bidsList = document.createElement("ul");
+
   bids
     .sort((a, b) => b.amount - a.amount)
     .forEach((bid) => {
       const listItem = document.createElement("li");
-      listItem.classList.add("mb-4", "mt-4");
+      listItem.classList.add("flex", "mb-4", "mt-4", "justify-evenly");
+
+      const bidderInfo = document.createElement("div");
+      bidderInfo.classList.add("flex", "items-center");
 
       const avatar = document.createElement("img");
       avatar.src = bid.bidder.avatar.url;
@@ -251,12 +254,14 @@ function showBidsPopup(bids, title) {
         "h-8",
         "rounded-full",
         "inline-block",
-        "mr-3",
+        "mr-2",
       );
 
       const name = document.createElement("span");
       name.classList.add("font-semibold");
       name.textContent = bid.bidder.name;
+
+      bidderInfo.append(avatar, name);
 
       const amount = document.createElement("span");
       amount.classList.add("text-deepTeal", "font-bold", "ml-3");
@@ -268,12 +273,16 @@ function showBidsPopup(bids, title) {
       const created = document.createElement("span");
       created.classList.add("text-gray-500", "ml-3", "text-sm");
       const bidTime = new Date(bid.created);
-      const formattedTime = `${bidTime.getHours()}:${String(
-        bidTime.getMinutes(),
-      ).padStart(2, "0")}`;
-      created.textContent = `Placed at ${formattedTime}`;
+      const formattedTime = `${bidTime.toLocaleDateString("en-US")} ${bidTime.toLocaleTimeString(
+        "en-US",
+        {
+          hour: "2-digit",
+          minute: "2-digit",
+        },
+      )}`;
+      created.textContent = `Placed on ${formattedTime}`;
 
-      listItem.append(avatar, name, amount, created);
+      listItem.append(bidderInfo, created, amount);
       bidsList.appendChild(listItem);
 
       const hr = document.createElement("hr");

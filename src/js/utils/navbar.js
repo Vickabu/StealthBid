@@ -1,5 +1,5 @@
 import { navbarStyles } from "./styles";
-import { createAuthModal } from "./authModal";
+import { createAuthModal, openAuthModal } from "./authModal";
 import { logout } from "../ui/global/logout";
 
 /**
@@ -73,12 +73,22 @@ function createNavbar() {
       window.location.href = `/profile/?name=${userName}`;
     });
 
+    const homeLink = document.createElement("a");
+    homeLink.href = "/";
+    homeLink.classList.add(...navbarStyles.links);
+    homeLink.textContent = "Home";
+
     const createListingLink = document.createElement("a");
-    createListingLink.href = "/listing/create";
+    createListingLink.href = "/listing/create/";
     createListingLink.classList.add(...navbarStyles.links);
     createListingLink.textContent = "Create Listing";
 
-    rightContainer.append(createListingLink, profileButton, authButton);
+    rightContainer.append(
+      homeLink,
+      createListingLink,
+      profileButton,
+      authButton,
+    );
   } else {
     authButton.textContent = "Sign In";
     authButton.classList.add(...navbarStyles.loginButton);
@@ -93,12 +103,4 @@ function createNavbar() {
   header.append(navbar);
 
   return header;
-}
-
-/**
- * Opens the authentication modal.
- */
-export function openAuthModal() {
-  const modal = document.getElementById("auth-popup");
-  modal.classList.remove("hidden");
 }

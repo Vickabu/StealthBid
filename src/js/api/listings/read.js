@@ -55,6 +55,7 @@ export async function fetchSearchListings(
     url.searchParams.append("limit", limit);
     url.searchParams.append("page", page);
     url.searchParams.append("q", encodeURIComponent(query));
+    url.searchParams.append("_seller", "true");
 
     const response = await fetch(url.toString(), {
       method: "GET",
@@ -108,6 +109,7 @@ export async function fetchUserListings(name) {
     }
 
     const listingsData = await response.json();
+    console.log(listingsData);
     return listingsData;
   } catch (error) {
     console.error("Error fetching user listings:", error);

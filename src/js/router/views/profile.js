@@ -32,24 +32,21 @@ async function displayProfilePage() {
     const profileContainer = document.getElementById("profile-container");
     profileContainer.innerHTML = "";
 
-    // Banner
     const bannerDiv = document.createElement("div");
     bannerDiv.className =
       "relative h-64 w-full bg-cover bg-center cursor-pointer";
     bannerDiv.style.backgroundImage = `url('${profileData.banner?.url || "/default-banner.jpg"}')`;
 
-    // Avatar
     const avatarContainer = document.createElement("div");
     avatarContainer.className =
       "absolute top-48 left-1/2 transform -translate-x-1/2 cursor-pointer";
     const avatarImg = document.createElement("img");
     avatarImg.className =
-      "w-36 h-36 rounded-full border-4 border-white shadow-lg";
+      "w-36 h-36 rounded-full border-4 border-white shadow-lg object-cover";
     avatarImg.src = profileData.avatar?.url || "/DarkLogo.jpg";
     avatarImg.alt = profileData.avatar?.alt || "User avatar";
     avatarContainer.appendChild(avatarImg);
 
-    // Profilinformasjon
     const profileDetailsDiv = document.createElement("div");
     profileDetailsDiv.className = "mt-24 text-center";
 
@@ -69,9 +66,8 @@ async function displayProfilePage() {
     creditsDiv.textContent = `Credits: $${profileData.credits || 0}`;
     profileDetailsDiv.appendChild(creditsDiv);
 
-    // Oppdateringsskjema for brukerens egen profil
     const updateFormContainer = document.createElement("div");
-    updateFormContainer.className = "mt-6 hidden"; // Skjules som standard
+    updateFormContainer.className = "mt-6 hidden";
 
     if (loggedInUserName === userName) {
       const updateButton = document.createElement("button");
@@ -81,13 +77,12 @@ async function displayProfilePage() {
       updateButton.textContent = "Update Profile";
 
       updateButton.addEventListener("click", () => {
-        updateFormContainer.classList.remove("hidden"); // Vis skjema
-        updateButton.classList.add("hidden"); // Skjul knappen
+        updateFormContainer.classList.remove("hidden");
+        updateButton.classList.add("hidden");
       });
 
       profileDetailsDiv.appendChild(updateButton);
 
-      // Oppdateringsskjema
       const form = document.createElement("form");
       form.className = "space-y-4";
 
@@ -146,7 +141,6 @@ async function displayProfilePage() {
     profileContainer.appendChild(profileDetailsDiv);
     profileContainer.appendChild(updateFormContainer);
 
-    // Liste over auksjoner
     const listingsSection = document.createElement("div");
     listingsSection.className = "mt-10 text-center";
 
@@ -173,7 +167,7 @@ async function displayProfilePage() {
     } else {
       const noListingsMessage = document.createElement("p");
       noListingsMessage.className = "text-gray-500";
-      noListingsMessage.textContent = "This user has no active auctions.";
+      noListingsMessage.textContent = "No active auctions.";
       listingsSection.appendChild(noListingsMessage);
     }
 

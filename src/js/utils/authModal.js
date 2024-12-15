@@ -3,6 +3,14 @@ import { createAuthForms } from "./authForms";
 import { createAuthTabs } from "./authTabs";
 
 /**
+ * Opens the authentication modal.
+ */
+export function openAuthModal() {
+  const modal = document.getElementById("auth-popup");
+  modal.classList.remove("hidden");
+}
+
+/**
  * Creates the authentication modal, including Login and Register forms.
  *
  * @returns {HTMLElement} The modal element.

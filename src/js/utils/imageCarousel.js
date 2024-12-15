@@ -31,6 +31,8 @@ export function createImageCarousel(media) {
       );
       img.dataset.index = index;
       imageWrapper.appendChild(img);
+
+      img.addEventListener("click", () => openFullscreenCarousel(media, index));
     });
 
     carousel.appendChild(imageWrapper);
@@ -102,12 +104,16 @@ export function createImageCarousel(media) {
       const dotsContainer = document.createElement("div");
       dotsContainer.classList.add(
         "absolute",
-        "bottom-2",
+        "bottom-1",
         "left-1/2",
         "transform",
         "-translate-x-1/2",
         "flex",
         "space-x-2",
+        "bg-deepTeal/80",
+        "px-3",
+        "py-1",
+        "rounded-sm",
       );
 
       media.forEach((_, index) => {
@@ -116,10 +122,17 @@ export function createImageCarousel(media) {
           "w-2",
           "h-2",
           "rounded-full",
-          "bg-deepTeal",
+          "bg-white",
           "opacity-50",
+          "cursor-pointer",
         );
         dot.dataset.index = index;
+
+        dot.addEventListener("click", (event) => {
+          event.stopPropagation();
+          updateCarousel(index);
+        });
+
         dotsContainer.appendChild(dot);
       });
 
@@ -145,4 +158,151 @@ export function createImageCarousel(media) {
   }
 
   return carousel;
+}
+
+function openFullscreenCarousel(media, startIndex) {
+  const overlay = document.createElement("div");
+  overlay.classList.add(
+    "fixed",
+    "inset-0",
+    "bg-black",
+    "bg-opacity-90",
+    "z-50",
+    "flex",
+    "items-center",
+    "justify-center",
+  );
+
+  let currentIndex = startIndex;
+
+  const fullscreenWrapper = document.createElement("div");
+  fullscreenWrapper.classList.add(
+    "relative",
+    "w-full",
+    "max-w-4xl",
+    "h-full",
+    "flex",
+    "items-center",
+    "justify-center",
+  );
+
+  const imgContainer = document.createElement("div");
+  imgContainer.classList.add("relative", "w-full", "h-auto");
+
+  const updateImage = () => {
+    imgContainer.innerHTML = "";
+    const img = document.createElement("img");
+    img.src = media[currentIndex].url || "https://via.placeholder.com/800x600";
+    img.alt = media[currentIndex].alt || "Fullscreen image";
+    img.classList.add("max-w-full", "max-h-full", "object-contain", "m-auto");
+    imgContainer.appendChild(img);
+  };
+
+  updateImage();
+
+  const closeButton = document.createElement("button");
+  closeButton.classList.add(
+    "absolute",
+    "top-4",
+    "right-4",
+    "bg-lightGrey",
+    "text-black",
+    "p-2",
+    "rounded-sm",
+    "z-10",
+    "hover:bg-gray-300",
+    "cursor-pointer",
+  );
+  closeButton.innerHTML = '<i class="fas fa-times"></i>';
+
+  closeButton.addEventListener("click", () => {
+    overlay.remove();
+  });
+
+  const prevButton = document.createElement("button");
+  prevButton.classList.add(
+    "absolute",
+    "left-4",
+    "top-1/2",
+    "transform",
+    "-translate-y-1/2",
+    "bg-deepTeal",
+    "text-white",
+    "p-2",
+    "rounded-sm",
+    "z-10",
+    "hover:bg-gray-700",
+  );
+  prevButton.innerHTML = '<i class="fas fa-chevron-left"></i>';
+
+  prevButton.addEventListener("click", () => {
+    currentIndex = (currentIndex - 1 + media.length) % media.length;
+    updateImage();
+    updateImageIndicator();
+  });
+
+  const nextButton = document.createElement("button");
+  nextButton.classList.add(
+    "absolute",
+    "right-4",
+    "top-1/2",
+    "transform",
+    "-translate-y-1/2",
+    "bg-deepTeal",
+    "text-white",
+    "p-2",
+    "rounded-sm",
+    "z-10",
+    "hover:bg-gray-700",
+  );
+  nextButton.innerHTML = '<i class="fas fa-chevron-right"></i>';
+
+  nextButton.addEventListener("click", () => {
+    currentIndex = (currentIndex + 1) % media.length;
+    updateImage();
+    updateImageIndicator();
+  });
+
+  const imageIndicator = document.createElement("div");
+  imageIndicator.classList.add(
+    "absolute",
+    "top-4",
+    "left-1/2",
+    "transform",
+    "-translate-x-1/2",
+    "text-white",
+    "font-bold",
+    "text-lg",
+    "z-10",
+  );
+  imageIndicator.textContent = `${currentIndex + 1} / ${media.length}`;
+
+  function updateImageIndicator() {
+    imageIndicator.textContent = `${currentIndex + 1} / ${media.length}`;
+  }
+
+  fullscreenWrapper.appendChild(imgContainer);
+  fullscreenWrapper.appendChild(imageIndicator);
+
+  if (media.length > 1) {
+    fullscreenWrapper.appendChild(prevButton);
+    fullscreenWrapper.appendChild(nextButton);
+  }
+
+  overlay.appendChild(fullscreenWrapper);
+  overlay.appendChild(closeButton);
+
+  document.body.appendChild(overlay);
+
+  overlay.addEventListener("click", (event) => {
+    if (event.target === overlay) {
+      overlay.remove();
+    }
+  });
+
+  window.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") {
+      overlay.remove();
+    }
+  });
 }
