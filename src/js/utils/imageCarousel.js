@@ -32,7 +32,9 @@ export function createImageCarousel(media) {
       img.dataset.index = index;
       imageWrapper.appendChild(img);
 
-      img.addEventListener("click", () => openFullscreenCarousel(media, index));
+      img.addEventListener("click", () =>
+        openFullscreenCarousel(media, currentIndex),
+      );
     });
 
     carousel.appendChild(imageWrapper);

@@ -34,12 +34,12 @@ async function displayProfilePage() {
 
     const bannerDiv = document.createElement("div");
     bannerDiv.className =
-      "relative h-64 w-full bg-cover bg-center cursor-pointer";
+      "relative h-72 w-full bg-cover bg-center cursor-pointer max-w-[1920px] mx-auto";
     bannerDiv.style.backgroundImage = `url('${profileData.banner?.url || "/default-banner.jpg"}')`;
 
     const avatarContainer = document.createElement("div");
     avatarContainer.className =
-      "absolute top-48 left-1/2 transform -translate-x-1/2 cursor-pointer";
+      "absolute top-64 left-1/2 transform -translate-x-1/2 cursor-pointer";
     const avatarImg = document.createElement("img");
     avatarImg.className =
       "w-36 h-36 rounded-full border-4 border-white shadow-lg object-cover";
@@ -48,7 +48,7 @@ async function displayProfilePage() {
     avatarContainer.appendChild(avatarImg);
 
     const profileDetailsDiv = document.createElement("div");
-    profileDetailsDiv.className = "mt-24 text-center";
+    profileDetailsDiv.className = "mt-16 max-w-screen-md text-center mx-auto";
 
     const nameHeading = document.createElement("h1");
     nameHeading.className = "text-3xl font-bold";
@@ -73,7 +73,7 @@ async function displayProfilePage() {
       const updateButton = document.createElement("button");
       updateButton.id = "update-profile-btn";
       updateButton.className =
-        "px-6 py-2 bg-deepTeal text-white font-medium rounded-lg hover:bg-freshSage transition";
+        "px-6 py-2 bg-deepTeal text-white font-medium rounded-lg hover:bg-freshSage transition mt-6";
       updateButton.textContent = "Update Profile";
 
       updateButton.addEventListener("click", () => {
@@ -84,7 +84,11 @@ async function displayProfilePage() {
       profileDetailsDiv.appendChild(updateButton);
 
       const form = document.createElement("form");
-      form.className = "space-y-4";
+      form.className = "space-y-4 max-w-xl mx-auto";
+
+      const avatarUrlLabel = document.createElement("label");
+      avatarUrlLabel.className = "block text-sm font-medium text-gray-700";
+      avatarUrlLabel.textContent = "Avatar URL";
 
       const avatarUrlInput = document.createElement("input");
       avatarUrlInput.type = "url";
@@ -93,6 +97,10 @@ async function displayProfilePage() {
       avatarUrlInput.className = "w-full p-2 border rounded";
       avatarUrlInput.name = "avatarUrl";
 
+      const bannerUrlLabel = document.createElement("label");
+      bannerUrlLabel.className = "block text-sm font-medium text-gray-700";
+      bannerUrlLabel.textContent = "Banner URL";
+
       const bannerUrlInput = document.createElement("input");
       bannerUrlInput.type = "url";
       bannerUrlInput.placeholder = "Banner URL";
@@ -100,14 +108,19 @@ async function displayProfilePage() {
       bannerUrlInput.className = "w-full p-2 border rounded";
       bannerUrlInput.name = "bannerUrl";
 
+      const bioLabel = document.createElement("label");
+      bioLabel.className = "block text-sm font-medium text-gray-700";
+      bioLabel.textContent = "Bio";
+      form.appendChild(bioLabel);
+
       const bioInput = document.createElement("textarea");
       bioInput.placeholder = "Bio";
       bioInput.value = profileData.bio || "";
-      bioInput.className = "w-full p-2 border rounded";
+      bioInput.className = "w-full p-2 border rounded h-32";
       bioInput.name = "bio";
 
       const formButtons = document.createElement("div");
-      formButtons.className = "flex gap-4";
+      formButtons.className = "flex gap-4 justify-end";
 
       const submitButton = document.createElement("button");
       submitButton.type = "submit";
@@ -132,7 +145,15 @@ async function displayProfilePage() {
       });
 
       formButtons.append(submitButton, cancelButton);
-      form.append(avatarUrlInput, bannerUrlInput, bioInput, formButtons);
+      form.append(
+        avatarUrlLabel,
+        avatarUrlInput,
+        bannerUrlLabel,
+        bannerUrlInput,
+        bioLabel,
+        bioInput,
+        formButtons,
+      );
       updateFormContainer.appendChild(form);
     }
 
@@ -155,7 +176,7 @@ async function displayProfilePage() {
 
     const gridContainer = document.createElement("div");
     gridContainer.className =
-      "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-4xl mx-auto";
+      "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-screen-xl mx-auto";
 
     if (listingsData.length > 0) {
       listingsData.forEach((listing) => {
