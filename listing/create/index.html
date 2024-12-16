@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StealthBid | Create</title>
+    <meta
+      name="description"
+      content="Create your own auction listing on StealthBid. Sell products easily by posting an listing and reaching interested buyers worldwide."
+    />
+
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <script type="module" src="/src/app.js"></script>
+  </head>
+
+  <body>
+    <main>
+      <form
+        name="createListing"
+        id="createListingForm"
+        class="max-w-xl mx-auto bg-white p-10 rounded-sm shadow-lg space-y-4 font-primary mt-10"
+      >
+        <h1
+          class="text-2xl font-semibold text-gray-700 text-center font-secondary py-4 w-full border-b border-deepTeal/60 mb-10"
+        >
+          Create Listing
+        </h1>
+
+        <div class="mb-4">
+          <label for="title" class="block text-md font-medium text-gray-700"
+            >Title</label
+          >
+          <input
+            id="title"
+            name="title"
+            type="text"
+            class="border p-2 w-full"
+            placeholder="Enter title"
+            maxlength="280"
+            required
+          />
+          <div id="titleError" class="text-red-500 text-sm mt-1 hidden">
+            Title is required and must be between 1 and 280 characters.
+          </div>
+        </div>
+
+        <div class="mb-6">
+          <label for="body" class="block text-md font-medium text-gray-700"
+            >Description</label
+          >
+          <textarea
+            id="textarea"
+            class="border p-4 h-48 w-full mb-4 flex-grow"
+            placeholder="Write your content here..."
+          ></textarea>
+          <div id="bodyError" class="text-red-500 text-sm mt-1 hidden">
+            Description is required.
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="tags" class="block text-md font-medium text-gray-700"
+            >Tags</label
+          >
+          <input
+            id="tags"
+            name="tags"
+            type="text"
+            class="border p-2 w-full"
+            placeholder="Enter tags (comma separated)"
+            maxlength="24"
+          />
+          <div id="tagsError" class="text-red-500 text-sm mt-1 hidden">
+            Maximum of 8 tags, each up to 24 characters.
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label
+            for="endsAt"
+            class="block text-md font-medium text-gray-700 mb-4"
+            >Deadline</label
+          >
+          <input
+            id="endsAt"
+            name="endsAt"
+            type="datetime-local"
+            class="border p-2 w-full"
+            required
+          />
+          <div id="endsAtError" class="text-red-500 text-sm mt-1 hidden">
+            Deadline is required.
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label for="media" class="block text-md font-medium text-gray-700"
+            >Image(s)</label
+          >
+          <div id="mediaContainer" class="space-y-4"></div>
+          <button
+            id="addMediaButton"
+            type="button"
+            class="bg-blue-600 text-white p-2 rounded-sm w-full mt-2 hover:bg-blue-500 mb-6"
+          >
+            Add Media
+          </button>
+          <div id="mediaError" class="text-red-500 text-sm mt-1 hidden">
+            You can add up to 8 media items.
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="bg-deepTeal text-white p-2 rounded-sm w-full mt-4 hover:bg-deepTeal/90"
+        >
+          Submit Listing
+        </button>
+      </form>
+    </main>
+  </body>
+</html>

@@ -32,50 +32,78 @@ const validations = {
     errorMessage:
       "Tags cannot exceed 8 items, and each tag must be less than 24 characters.",
   },
+  endsAt: {
+    validate: (value) => {
+      const now = new Date();
+      const deadline = new Date(value);
+      return deadline > now;
+    },
+    errorMessage: "Deadline must be a valid future date.",
+  },
   media: {
     maxLength: 8,
     errorMessage: "You cannot have more than 8 media items.",
   },
 };
 
+/**
+ * Validates a field's value against predefined rules based on its type.
+ * Checks for pattern matching, length constraints, reference value matching,
+ * and custom validation. Returns an error message if validation fails, or `null` if valid.
+ *
+ * @param {string|Array} value - The value to validate, either a string or array (for tags/media).
+ * @param {string} type - The field type (e.g., "email", "password", "tags", "media").
+ * @param {string} [referenceValue] - (Optional) A reference value for comparison (e.g., "confirmPassword").
+ *
+ * @returns {string|null} - Error message or `null` if valid.
+ *
+ * @example
+ * const error = validateField("myemail@example.com", "email");
+ * if (error) console.log("Validation failed:", error);
+ */
+
 export function validateField(value, type, referenceValue) {
   const validationRules = validations[type];
   if (!validationRules) {
-    throw new Error(`Unknown field type: ${type}`);
+    return `Unknown field type: ${type}`;
   }
 
   if (validationRules.pattern && !validationRules.pattern.test(value)) {
-    throw new Error(validationRules.errorMessage);
+    return validationRules.errorMessage;
   }
 
   if (validationRules.minLength && value.length < validationRules.minLength) {
-    throw new Error(validationRules.errorMessage);
+    return validationRules.errorMessage;
   }
 
   if (validationRules.maxLength && value.length > validationRules.maxLength) {
-    throw new Error(validationRules.errorMessage);
+    return validationRules.errorMessage;
   }
 
   if (validationRules.maxTagLength && Array.isArray(value)) {
     if (value.some((tag) => tag.length > validationRules.maxTagLength)) {
-      throw new Error(validationRules.errorMessage);
+      return validationRules.errorMessage;
     }
   }
 
   if (validationRules.matches && value !== referenceValue) {
-    throw new Error(validationRules.errorMessage);
+    return validationRules.errorMessage;
+  }
+
+  if (validationRules.validate && !validationRules.validate(value)) {
+    return validationRules.errorMessage;
   }
 
   if (type === "media" && Array.isArray(value)) {
     if (value.length > validationRules.maxLength) {
-      throw new Error(validationRules.errorMessage);
+      return validationRules.errorMessage;
     }
     value.forEach((item, index) => {
       if (!item.url || !item.alt) {
-        throw new Error(
-          `Each media item (at index ${index}) must have both a url and alt text.`
-        );
+        return `Each media item (at index ${index}) must have both a url and alt text.`;
       }
     });
   }
+
+  return null;
 }

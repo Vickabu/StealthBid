@@ -5,13 +5,28 @@ import {
 } from "../constant";
 import { headers } from "../headers";
 
+/**
+ * Fetches a list of listings with optional filters and pagination.
+ *
+ * @param {number} [page=1] - The page number for pagination.
+ * @param {number} [limit=12] - The number of listings per page.
+ * @param {string} [tag=""] - Optional tag filter for listings.
+ * @param {string} [sort="endsAt"] - The field to sort the listings by (e.g., "endsAt").
+ * @param {string} [sortOrder="asc"] - The sort order, either "asc" or "desc".
+ * @param {boolean} [active=true] - Whether to fetch active listings or not.
+ * @returns {Array} - Returns an array of listings or an empty array if the request fails.
+ *
+ * @example
+ * const listings = await fetchListings(1, 12, "tech", "endsAt", "asc", true);
+ */
+
 export async function fetchListings(
   page = 1,
   limit = 12,
   tag = "",
   sort = "endsAt",
   sortOrder = "asc",
-  active = true
+  active = true,
 ) {
   try {
     const url = new URL(API_LISTINGS);
@@ -34,7 +49,6 @@ export async function fetchListings(
     }
 
     const { data } = await response.json();
-    console.log("Fetched data:", data);
     return data;
   } catch (error) {
     console.error("Error fetching listings:", error);
@@ -42,12 +56,26 @@ export async function fetchListings(
   }
 }
 
+/**
+ * Fetches listings based on a search query with optional filters and pagination.
+ *
+ * @param {string} query - The search query string.
+ * @param {number} [page=1] - The page number for pagination.
+ * @param {number} [limit=12] - The number of listings per page.
+ * @param {string} [sort="endsAt"] - The field to sort the listings by (e.g., "endsAt").
+ * @param {string} [sortOrder="asc"] - The sort order, either "asc" or "desc".
+ * @returns {Array} - Returns an array of search result listings or an empty array if the request fails.
+ *
+ * @example
+ * const searchResults = await fetchSearchListings("laptop", 1, 12, "price", "desc");
+ */
+
 export async function fetchSearchListings(
   query,
   page = 1,
   limit = 12,
   sort = "endsAt",
-  sortOrder = "asc"
+  sortOrder = "asc",
 ) {
   try {
     const url = new URL(API_LISTINGS_SEARCH);
@@ -56,8 +84,7 @@ export async function fetchSearchListings(
     url.searchParams.append("limit", limit);
     url.searchParams.append("page", page);
     url.searchParams.append("q", encodeURIComponent(query));
-
-    console.log("Final URL:", url.toString());
+    url.searchParams.append("_seller", "true");
 
     const response = await fetch(url.toString(), {
       method: "GET",
@@ -69,13 +96,22 @@ export async function fetchSearchListings(
     }
 
     const { data } = await response.json();
-    console.log("Fetched data:", data);
     return data;
   } catch (error) {
     console.error("Error fetching listings:", error);
     return [];
   }
 }
+
+/**
+ * Fetches details of a specific listing by its ID.
+ *
+ * @param {string} id - The ID of the listing to fetch.
+ * @returns {Object|null} - Returns the listing data or `null` if the request fails.
+ *
+ * @example
+ * const listing = await fetchListing("12345");
+ */
 
 export async function fetchListing(id) {
   try {
@@ -93,13 +129,22 @@ export async function fetchListing(id) {
     }
 
     const { data } = await response.json();
-    console.log(data);
     return data;
   } catch (error) {
     console.error("Error fetching listing:", error);
     return null;
   }
 }
+
+/**
+ * Fetches a list of listings by a specific user's profile name.
+ *
+ * @param {string} name - The user's profile name.
+ * @returns {Array} - Returns an array of the user's listings or an empty array if the request fails.
+ *
+ * @example
+ * const userListings = await fetchUserListings("john_doe");
+ */
 
 export async function fetchUserListings(name) {
   try {
@@ -113,6 +158,7 @@ export async function fetchUserListings(name) {
     }
 
     const listingsData = await response.json();
+    console.log(listingsData);
     return listingsData;
   } catch (error) {
     console.error("Error fetching user listings:", error);

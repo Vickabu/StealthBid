@@ -1,43 +1,88 @@
-import { toggleMediaError } from "../../utils/mediaHandler";
 import { createListing } from "../../api/listings/create";
 import { hideLoader, showLoader } from "../../utils/loader";
+import { validateField } from "../../utils/validate";
+
+/**
+ * Handles the process of creating a new listing.
+ * Validates form input, sends a request to the API, and handles success or failure.
+ *
+ * @async
+ * @param {Event} event - The submit event triggered when the form is submitted.
+ * @returns {void}
+ * @throws {Error} If the API request fails or if validation errors occur.
+ */
 
 export async function onCreateListing(event) {
   event.preventDefault();
-  console.log("Submit clicked!");
 
   const title = event.target.title.value.trim();
-  const body = document.getElementById("editor").innerText.trim();
-
+  const description = document.getElementById("textarea").innerText.trim();
   const tags = event.target.tags.value
     .split(",")
     .map((tag) => tag.trim())
     .filter((tag) => tag.length > 0);
+  const endsAt = event.target.endsAt.value.trim();
 
-  const endsAt = event.target.endsAt.value;
+  const fields = [
+    { id: "title", value: title, type: "title" },
+    { id: "description", value: description, type: "description" },
+    { id: "tags", value: tags, type: "tags" },
+    { id: "endsAt", value: endsAt, type: "endsAt" },
+  ];
 
-  const mediaUrls = event.target.querySelectorAll("[name='mediaUrl']");
+  let validationError = false;
 
-  const media = [];
-  mediaUrls.forEach((url, index) => {
-    console.log(`Processing media ${index + 1}: URL = ${url.value}`);
-    if (url.value) {
-      media.push({
-        url: url.value,
-        alt: "product image",
-      });
+  fields.forEach((field) => {
+    const errorElement = document.getElementById(`${field.id}Error`);
+    const inputElement = document.getElementById(field.id);
+
+    if (errorElement) {
+      errorElement.classList.add("hidden");
+    }
+    if (inputElement) {
+      inputElement.classList.remove("error");
     }
   });
 
-  console.log("Collected media:", media);
+  for (const field of fields) {
+    const errorMessage = validateField(field.value, field.type);
+    const errorElement = document.getElementById(`${field.id}Error`);
+    const inputElement = document.getElementById(field.id);
+
+    if (errorMessage) {
+      if (errorElement) {
+        errorElement.textContent = errorMessage;
+        errorElement.classList.remove("hidden");
+      }
+      if (inputElement) {
+        inputElement.classList.add("error");
+      }
+
+      validationError = true;
+    }
+  }
+
+  if (validationError) {
+    return;
+  }
+
+  const mediaUrls = event.target.querySelectorAll("[name='mediaUrl']");
+  const media = Array.from(mediaUrls)
+    .filter((url) => url.value)
+    .map((url) => ({ url: url.value, alt: "product image" }));
 
   try {
     showLoader();
-    await createListing({ title, description: body, tags, endsAt, media });
+    await createListing({
+      title,
+      description,
+      tags,
+      endsAt,
+      media,
+    });
 
     event.target.reset();
     document.getElementById("mediaContainer").innerHTML = "";
-    toggleMediaError(document.getElementById("mediaError"), false);
     alert("Listing created successfully.");
     window.location.href = "/";
   } catch (error) {

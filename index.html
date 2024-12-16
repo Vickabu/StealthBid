@@ -1,53 +1,86 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StealthBid</title>
+    <meta
+      name="description"
+      content="Welcome to StealthBid – the ultimate auction site for finding unique products and great deals. Join today and start bidding!"
+    />
+    <link rel="icon" href="/favicon.png" type="image/png" />
+    <script type="module" src="/src/app.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>StealthBid</title>
-  <script type="module" src="/src/app.js"></script>
-</head>
+  <body>
+    <main>
+      <section
+        id="banner"
+        class="flex items-center justify-center sm:justify-start w-full h-screen bg-cover bg-center px-4 sm:px-16"
+        style="background-image: url(&quot;/banner-photo.jpg&quot;)"
+      >
+        <div
+          class="space-y-6 w-full sm:w-[639px] h-content rounded-sm bg-[rgba(16,47,50,0.80)] shadow-lg p-8 mx-auto md:mx-0"
+        >
+          <h1 class="text-5xl font-bold text-white font-secondary">
+            Discover Your Next Great Find Today!
+          </h1>
+          <p class="text-lg text-white font-secondary">
+            Welcome to StealthBid, your ultimate marketplace for uncovering
+            hidden treasures or sharing your own. Join our vibrant community of
+            savvy bidders and start exploring endless opportunities to score
+            unique deals and rare finds!
+          </p>
+          <button
+            id="open-login-register"
+            class="bg-warmSand px-6 py-3 rounded-sm shadow hover:bg-dustyTan transition border border-black font-primary, font-semibold"
+          >
+            Get Started
+          </button>
+        </div>
+      </section>
 
-<body>
-
-  <section id="banner" class="flex items-center justify-center w-full h-[900px] bg-cover bg-center px-16"
-    style="background-image: url('/banner-photo.jpg');">
-    <div class="text-center space-y-6">
-      <h1 class="text-5xl font-bold text-white">Discover Your Next Great Find Today!</h1>
-      <p class="text-lg text-white">Welcome to StealthBid, your ultimate marketplace for uncovering hidden treasures or
-        sharing your own.Join our vibrant community of savvy bidders and start exploring endless opportunities to score
-        unique deals and rare finds!</p>
-      <button id="open-login-register" class="bg-warmSand px-6 py-3 rounded-sm shadow hover:bg-dustyTan transition">Get
-        Started</button>
-    </div>
-  </section>
-
-  <section class="max-w-[1153px] mx-auto p-4">
-    <div class="flex w-full justify-between items-center">
-      <div>
-        <p>Bargains</p>
-        <h2>Auctions</h2>
-        <p>Discover amazing products available for bidding today!</p>
-      </div>
-      <div class="flex items-center space-x-4">
-        <div id="search-tag-container"></div>
-        <input type="text" id="search-bar" placeholder="Search Listings..."
-          class="border border-gray-300 rounded-sm px-3 py-2">
-        <select id="sort-dropdown" class="border border-gray-300 rounded-sm px-3 py-2 cursor-pointer">
-          <option value="time-low-high">Time Remaining: Low - High</option>
-          <option value="time-high-low">Time Remaining: High - Low</option>
-          <option value="newest">Newest - Oldest</option>
-          <option value="oldest">Oldest - Newest</option>
-          <option value="a-z">A-Z</option>
-          <option value="z-a">Z-A</option>
-        </select>
-      </div>
-    </div>
-    <div id="listings-container" class="mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-    <div id="pagination-container" class="flex justify-between p-6 mx-auto"></div>
-  </section>
-
-
-</body>
-
+      <section class="max-w-[1153px] mx-auto p-4 font-primary mt-10">
+        <div
+          class="flex flex-col md:flex-row w-full justify-between items-start md:items-center space-y-4 md:space-y-0"
+        >
+          <div>
+            <p class="text-xs md:text-base">Bargains</p>
+            <h2 class="text-4xl font-bold mb-2 mt-2">Auctions</h2>
+            <p class="text-sm md:text-lg">
+              Discover amazing products available for bidding today!
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2">
+            <div id="search-tag-container"></div>
+            <input
+              type="text"
+              id="search-bar"
+              placeholder="Search Listings..."
+              class="border border-deepTeal rounded-sm px-2 py-1"
+            />
+            <select
+              id="sort-dropdown"
+              class="border border-deepTeal rounded-sm px-2 py-1 cursor-pointer"
+            >
+              <option value="time-low-high">Time: Low-High</option>
+              <option value="time-high-low">Time: High-Low</option>
+              <option value="newest">Newest-Oldest</option>
+              <option value="oldest">Oldest-Newest</option>
+              <option value="a-z">A-Z</option>
+              <option value="z-a">Z-A</option>
+            </select>
+          </div>
+        </div>
+        <div
+          id="listings-container"
+          class="mt-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        ></div>
+        <div
+          id="pagination-container"
+          class="flex justify-center items-center py-4 px-2 mx-auto w-full"
+        ></div>
+      </section>
+    </main>
+  </body>
 </html>

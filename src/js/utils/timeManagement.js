@@ -10,13 +10,3 @@ export function calculateTimeRemaining(endsAt) {
 
   return `${hours}h ${minutes}m`;
 }
-
-export function parseTimeToMinutes(time) {
-  const match = time.match(/(\d+)h (\d+)m/);
-  if (match) {
-    const hours = parseInt(match[1], 10);
-    const minutes = parseInt(match[2], 10);
-    return hours * 60 + minutes;
-  }
-  return Infinity;
-}

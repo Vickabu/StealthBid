@@ -11,7 +11,7 @@ export default defineConfig({
         main: resolve(__dirname, "./index.html"),
         profile: resolve(__dirname, "./profile/index.html"),
         listing: resolve(__dirname, "./listing/index.html"),
-        createListing: resolve(__dirname, "./listing/create.html"),
+        createListing: resolve(__dirname, "./listing/create/index.html"),
       },
     },
   },

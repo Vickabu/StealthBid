@@ -17,5 +17,3 @@ export const API_LISTINGS = `${API_AUCTION}/listings`;
 export const API_LISTINGS_SEARCH = `${API_AUCTION}/listings/search`;
 
 export const API_AUCTION_PROFILES = `${API_AUCTION}/profiles`;
-
-export const API_AUCTION_USER = `${API_AUCTION}/profiles/{name}`;

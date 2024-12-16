@@ -1,5 +1,3 @@
-document.body.classList.add("bg-lightGrey");
-
 export default async function router(pathname = window.location.pathname) {
   switch (pathname) {
     case "/":
@@ -11,7 +9,7 @@ export default async function router(pathname = window.location.pathname) {
     case "/listing/":
       await import("./views/listing.js");
       break;
-    case "/listing/create":
+    case "/listing/create/":
       await import("./views/listingCreate.js");
       break;
   }
