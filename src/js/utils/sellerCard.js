@@ -1,3 +1,18 @@
+/**
+ * Creates a seller profile card with avatar, name, and bio.
+ *
+ * The card includes hover effects for interactivity and redirects
+ * to the seller's profile page when clicked.
+ *
+ * @param {Object} seller - The seller object containing their details.
+ * @param {string} seller.name - The name of the seller.
+ * @param {Object} seller.avatar - The avatar object of the seller.
+ * @param {string} seller.avatar.url - The URL of the seller's avatar image.
+ * @param {string} [seller.bio] - A short biography of the seller.
+ *
+ * @returns {HTMLElement} A dynamically generated seller card element.
+ */
+
 export function createSellerCard(seller) {
   const { name, avatar, bio } = seller;
 
@@ -9,6 +24,10 @@ export function createSellerCard(seller) {
     "p-2",
     "max-w-xs",
     "cursor-pointer",
+    "transform",
+    "transition-transform",
+    "duration-200",
+    "hover:scale-105",
   );
 
   const avatarElement = document.createElement("img");

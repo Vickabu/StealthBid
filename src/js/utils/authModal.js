@@ -3,17 +3,34 @@ import { createAuthForms } from "./authForms";
 import { createAuthTabs } from "./authTabs";
 
 /**
- * Opens the authentication modal.
+ * Opens the authentication modal by removing the "hidden" class.
+ *
+ * This function makes the modal with the ID "auth-popup" visible by removing the "hidden" class.
+ *
+ * @function
+ * @example
+ * // Example usage:
+ * openAuthModal(); // Opens the modal
  */
+
 export function openAuthModal() {
   const modal = document.getElementById("auth-popup");
   modal.classList.remove("hidden");
 }
 
 /**
- * Creates the authentication modal, including Login and Register forms.
+ * Creates the authentication modal, including Login and Register forms and tabs.
  *
- * @returns {HTMLElement} The modal element.
+ * This function constructs the modal with a header, logo, close button, authentication tabs, and the forms for login and registration.
+ * It appends all necessary elements together and adds event listeners to handle closing the modal when clicking outside of it or pressing the Escape key.
+ *
+ * @function
+ * @returns {HTMLElement} The modal element with forms and tabs.
+ *
+ * @example
+ * // Example usage:
+ * const authModal = createAuthModal();
+ * document.body.appendChild(authModal); // Adds the modal to the body
  */
 
 export function createAuthModal() {
@@ -49,11 +66,11 @@ export function createAuthModal() {
   modalContainer.append(header, tabs, forms);
   modal.appendChild(modalContainer);
 
-  // modal.addEventListener("click", (event) => {
-  //   if (event.target === modal) {
-  //     modal.classList.add("hidden");
-  //   }
-  // });
+  modal.addEventListener("click", (event) => {
+    if (event.target === modal) {
+      modal.classList.add("hidden");
+    }
+  });
 
   window.addEventListener("keydown", (event) => {
     if (event.key === "Escape") {

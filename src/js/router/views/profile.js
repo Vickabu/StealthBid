@@ -1,7 +1,7 @@
 import { readProfile } from "../../api/profile/read";
 import { fetchUserListings } from "../../api/listings/read";
 import { createListingCard } from "../../utils/createListingsCard";
-import { onUpdateProfile } from "../../api/profile/update";
+import { onUpdateProfile } from "../../ui/profile/update";
 
 async function displayProfilePage() {
   const urlParams = new URLSearchParams(window.location.search);

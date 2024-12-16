@@ -112,6 +112,7 @@ export function createListingDetailCard(listing) {
       "px-4",
       "rounded-sm",
       "hover:bg-freshSage/80",
+      "hover:underline",
       "w-full",
       "mb-6",
     );
@@ -132,7 +133,7 @@ export function createListingDetailCard(listing) {
     bidInput.classList.add(
       "w-full",
       "border",
-      "border-gray-300",
+      "border-deepTeal",
       "rounded-sm",
       "p-3",
       "mb-4",
@@ -147,6 +148,7 @@ export function createListingDetailCard(listing) {
       "px-6",
       "rounded-sm",
       "hover:bg-deepTeal/85",
+      "hover:underline",
       "w-full",
       "mb-6",
     );
@@ -180,13 +182,16 @@ export function createListingDetailCard(listing) {
   if (isCurrentUserSeller) {
     const deleteButton = document.createElement("button");
     deleteButton.classList.add(
-      "bg-red-500",
+      "bg-red-600",
       "text-white",
       "py-2",
       "px-6",
       "rounded-sm",
-      "hover:bg-red-600",
+      "hover:bg-red-500",
+      "hover:underline",
       "w-full",
+      "border",
+      "border-deepTeal",
     );
     deleteButton.textContent = "Delete Listing";
     deleteButton.dataset.listingId = id;

@@ -2,6 +2,24 @@ import { login } from "../../api/auth/login";
 import { hideLoader, showLoader } from "../../utils/loader";
 import { validateField } from "../../utils/validate";
 
+/**
+ * Handles the login form submission, validating input fields, and performing login.
+ * Displays a loader during the process and redirects the user upon successful login.
+ * Shows a toast message upon success or error.
+ *
+ * @async
+ * @function onLogin
+ * @param {Event} event - The form submission event.
+ * @returns {void}
+ * @throws {Error} If validation fails or login encounters an error.
+ *   The error message will be passed through a toast notification (e.g., "Invalid email or password").
+ *
+ * @example
+ * // Add an event listener to the login form
+ * const loginForm = document.getElementById("login-form");
+ * loginForm.addEventListener("submit", onLogin);
+ */
+
 export async function onLogin(event) {
   event.preventDefault();
 
@@ -12,13 +30,21 @@ export async function onLogin(event) {
   try {
     validateField(email, "email");
     validateField(password, "password");
+
     await login({
       email,
       password,
     });
+
     hideLoader();
-    window.location.href = "/";
+
+    window.toastr.success("Login successful", "Welcome!");
+    console.log("Success toast shown");
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1000);
   } catch (error) {
-    alert(`Login failed: ${error.message}`);
+    hideLoader();
+    window.toastr.error(`Login failed: ${error.message}`, "Error");
   }
 }

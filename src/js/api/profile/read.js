@@ -1,6 +1,19 @@
 import { API_AUCTION_PROFILES } from "../constant";
 import { headers } from "../headers";
 
+/**
+ * Fetches the profile data of a specific user by their profile name.
+ *
+ * @param {string} name - The profile name of the user whose data is being fetched.
+ * @returns {Object} - Returns the profile data of the user, or throws an error if the fetch fails.
+ *
+ * @throws {Error} - Throws an error if the API request fails or the response is not OK.
+ *
+ * @example
+ * const profile = await readProfile("john_doe");
+ * console.log(profile);
+ */
+
 export async function readProfile(name) {
   try {
     const response = await fetch(`${API_AUCTION_PROFILES}/${name}`, {
@@ -19,66 +32,3 @@ export async function readProfile(name) {
     throw error;
   }
 }
-
-// export async function readProfile() {
-//   const urlParams = new URLSearchParams(window.location.search);
-//   const username = urlParams.get("name");
-
-//   try {
-//     const response = await fetch(
-//       `${API_AUCTION_PROFILES}/${username}/listings`,
-//       {
-//         method: "GET",
-//         headers: headers(),
-//       }
-//     );
-
-//     if (response.ok) {
-//       const data = await response.json();
-//       console.log(data);
-//       return data.data;
-//     } else {
-//       console.error("Failed to fetch listings:", response.status);
-//     }
-//   } catch (error) {
-//     console.error("Error reading profile:", error);
-//   }
-// }
-
-// export async function readProfile(name) {
-//   try {
-//     const response = await fetch(`${API_AUCTION_PROFILES}/${name}`, {
-//       method: "GET",
-//       headers: headers(),
-//     });
-//     if (response.ok) {
-//       const data = await response.json();
-//       console.log(data)
-//       return data.data;
-//     } else {
-//       console.error("Failed to fetch profile:", response.status);
-//     }
-//   } catch (error) {
-//     console.error("Error fetching profile:", error);
-//   }
-// }
-
-// export async function readProfiles(limit = 12, page = 1) {
-//   try {
-//     const params = new URLSearchParams({
-//       limit: limit.toString(),
-//       page: page.toString(),
-//     });
-
-//     const response = await fetch(`${API_AUCTION_PROFILES}?${params}`, {
-//       method: "GET",
-//       headers: headers(),
-//     });
-//     if (response.ok) {
-//       const data = await response.json();
-//       return data;
-//     }
-//   } catch (error) {
-//     console.error("Error fetching profiles:", error);
-//   }
-// }

@@ -92,6 +92,7 @@ export const formStyles = {
   container: ["w-full", "p-2"],
   signInform: ["flex", "flex-col", "gap-4"],
   input: ["form-input", "p-2", "border", "rounded-sm", "text-sm", "md:text-lg"],
+  errorMessage: ["text-center", "bg-mutedRose", "font-bold"],
   loginButton: [
     "bg-dustyTan",
     "py-2",

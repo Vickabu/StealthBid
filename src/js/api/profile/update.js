@@ -1,15 +1,32 @@
 import { API_AUCTION_PROFILES } from "../constant";
 import { headers } from "../headers";
 
+/**
+ * Updates the profile data of a user.
+ *
+ * This function sends a PUT request to the API to update the profile information
+ * of the specified user with the given `profileData`.
+ *
+ * @param {Object} profileData - The data to update the user's profile with.
+ *                                 This object should contain the fields to be updated.
+ * @param {string} userName - The username of the user whose profile is being updated.
+ * @returns {Object} - Returns the updated profile data upon success.
+ *
+ * @throws {Error} - Throws an error if the API request fails or the response is not OK.
+ *
+ * @example
+ * const updatedProfile = await updateProfile({ bio: "New bio text", age: 25 }, "john_doe");
+ * console.log(updatedProfile);
+ */
+
 export async function updateProfile(profileData, userName) {
   try {
-    // Legg til userName i URL-en
-    const url = `${API_AUCTION_PROFILES}/${userName}`; // Bygg URL-en med brukernavnet
+    const url = `${API_AUCTION_PROFILES}/${userName}`;
 
     const response = await fetch(url, {
       method: "PUT",
-      headers: headers(), // Bruker headers funksjonen som setter Authorization
-      body: JSON.stringify(profileData), // Sender profilendringer
+      headers: headers(),
+      body: JSON.stringify(profileData),
     });
 
     if (!response.ok) {
@@ -20,28 +37,5 @@ export async function updateProfile(profileData, userName) {
   } catch (error) {
     console.error("Error updating profile:", error);
     throw error;
-  }
-}
-
-export async function onUpdateProfile(event, userName, refreshProfile) {
-  event.preventDefault();
-
-  const form = event.target;
-  const avatarUrl = form.querySelector("[name='avatarUrl']").value || "";
-  const bannerUrl = form.querySelector("[name='bannerUrl']").value || "";
-  const bio = form.querySelector("[name='bio']").value || "";
-  const updatedProfile = {
-    avatar: { url: avatarUrl },
-    banner: { url: bannerUrl },
-    bio: bio,
-  };
-
-  try {
-    await updateProfile(updatedProfile, userName);
-    alert("Profile updated successfully!");
-    if (refreshProfile) refreshProfile();
-  } catch (error) {
-    alert("Failed to update profile. Please try again.");
-    console.error("Error updating profile:", error);
   }
 }

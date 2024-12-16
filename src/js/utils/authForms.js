@@ -3,9 +3,21 @@ import { onRegister } from "../ui/auth/register";
 import { formStyles } from "./styles";
 
 /**
- * Creates the Login and Register forms.
+ * Creates the Login and Register forms dynamically in the DOM.
  *
- * @returns {HTMLElement} The forms container.
+ * This function generates two forms: one for login and another for user registration.
+ * Each form is populated with fields, such as email, password, and name, and has an associated submit button.
+ * The function also attaches event listeners for form submissions and includes error message containers for form validation feedback.
+ *
+ * The login form is displayed by default, while the register form is initially hidden, and can be toggled (presumably) by the UI.
+ *
+ * @function
+ * @returns {HTMLElement} The container element that holds both the login and registration forms.
+ *
+ * @example
+ * // Example usage:
+ * const authForms = createAuthForms();
+ * document.getElementById('some-container').appendChild(authForms);
  */
 
 export function createAuthForms() {
@@ -13,6 +25,7 @@ export function createAuthForms() {
   formsContainer.id = "auth-forms";
   formsContainer.classList.add(...formStyles.container);
 
+  // Create login form
   const loginForm = document.createElement("form");
   loginForm.id = "login-form";
   loginForm.classList.add(...formStyles.signInform);
@@ -45,6 +58,7 @@ export function createAuthForms() {
 
   loginForm.addEventListener("submit", onLogin);
 
+  // Create register form
   const registerForm = document.createElement("form");
   registerForm.id = "register-form";
   registerForm.classList.add(...formStyles.signInform, "hidden");
@@ -79,6 +93,11 @@ export function createAuthForms() {
     input.required = field.required;
     input.classList.add(...formStyles.input);
     registerForm.appendChild(input);
+
+    const errorDiv = document.createElement("div");
+    errorDiv.id = `${field.id}-error`;
+    errorDiv.classList.add(...formStyles.errorMessage);
+    registerForm.appendChild(errorDiv);
   });
 
   const registerSubmitButton = document.createElement("button");
