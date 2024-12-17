@@ -1,6 +1,6 @@
-import { navbarStyles } from "./styles";
-import { createAuthModal, openAuthModal } from "./authModal";
-import { logout } from "../ui/global/logout";
+import { navbarStyles } from "../../utils/styles";
+import { createAuthModal, openAuthModal } from "../auth/authModal";
+import { logout } from "../../ui/global/logout";
 
 /**
  * Creates a navbar with a Sign In button and a global authentication modal.
@@ -26,7 +26,7 @@ export async function createNavbarAndModal() {
  */
 
 function createNavbar() {
-  const header = document.createElement("header");
+  const header = document.querySelector("header");
 
   const navbar = document.createElement("nav");
   navbar.classList.add(...navbarStyles.container);

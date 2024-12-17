@@ -1,6 +1,6 @@
-import { onLogin } from "../ui/auth/login";
-import { onRegister } from "../ui/auth/register";
-import { formStyles } from "./styles";
+import { onLogin } from "../../ui/auth/login";
+import { onRegister } from "../../ui/auth/register";
+import { formStyles } from "../../utils/styles";
 
 /**
  * Creates the Login and Register forms dynamically in the DOM.

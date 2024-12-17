@@ -14,9 +14,16 @@ import { headers } from "../headers";
  * console.log(profile);
  */
 
-export async function readProfile(name) {
+export async function readProfile(name, _listings = false, _wins = false) {
   try {
-    const response = await fetch(`${API_AUCTION_PROFILES}/${name}`, {
+    const queryParams = new URLSearchParams({
+      _listings: _listings.toString(),
+      _wins: _wins.toString(),
+    }).toString();
+
+    const url = `${API_AUCTION_PROFILES}/${name}?${queryParams}`;
+
+    const response = await fetch(url, {
       method: "GET",
       headers: headers(),
     });

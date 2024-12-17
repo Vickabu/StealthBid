@@ -1,8 +1,8 @@
 import { fetchListing } from "../../api/listings/read";
-import { createListingDetailCard } from "../../utils/createListingCard";
-import { hideLoader, showLoader } from "../../utils/loader";
+import { createListingDetailCard } from "../../components/listings/createListingCard";
+import { hideLoader, showLoader } from "../../ui/global/loader";
 
-export async function displayListing() {
+export async function displayListingPage() {
   try {
     const urlParams = new URLSearchParams(window.location.search);
     const id = urlParams.get("id");
@@ -13,7 +13,6 @@ export async function displayListing() {
 
     showLoader();
     const listing = await fetchListing(id);
-    console.log(listing);
     if (!listing) {
       console.error("Listing not found or error occurred");
       return;
@@ -30,4 +29,4 @@ export async function displayListing() {
   }
 }
 
-displayListing();
+displayListingPage();

@@ -1,3 +1,3 @@
-import { displayListings } from "../../utils/displayListing";
+import { displayListings } from "../../components/listings/displayListings";
 
 displayListings();

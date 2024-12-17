@@ -1,5 +1,5 @@
-import { createImageCarousel } from "./imageCarousel";
-import { calculateTimeRemaining } from "./timeManagement";
+import { createImageCarousel } from "../../utils/imageCarousel";
+import { calculateTimeRemaining } from "../../utils/timeManagement";
 
 export function createListingCard(listing) {
   const { title, description, media, seller, bids = [], endsAt } = listing;
@@ -7,7 +7,7 @@ export function createListingCard(listing) {
   const highestBid =
     bids.length > 0
       ? `Highest Bid: ${new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(Math.max(...bids.map((bid) => bid.amount)))}`
-      : "No bids yet";
+      : "No bids";
   const timeRemaining = calculateTimeRemaining(endsAt);
 
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -51,6 +51,7 @@ export function createListingCard(listing) {
     "items-center",
     "p-4",
     "mt-auto",
+    "border-t",
   );
 
   const highestBidElement = document.createElement("span");

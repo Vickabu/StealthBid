@@ -6,7 +6,15 @@ import eslintConfigPrettier from "eslint-config-prettier";
 export default [
   {
     languageOptions: {
-      globals: globals.browser,
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        global: "readonly",
+        stealthbid: "readonly",
+        noroff: "readonly",
+        fontawesome: "readonly",
+        toastr: "readonly",
+      },
     },
   },
   pluginJs.configs.recommended,
@@ -15,6 +23,12 @@ export default [
     files: ["vite.config.js"],
     rules: {
       "no-undef": "off",
+      "no-cond-assign": "off",
+      "no-control-regex": "off",
+      "no-empty": "off",
+      "no-useless-escape": "off",
+      "no-prototype-builtins": "off",
+      "no-self-assign": "off",
     },
   },
 ];
