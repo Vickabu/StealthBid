@@ -1,6 +1,6 @@
 # StealthBid - Auction Marketplace
 
-assets/images/BrightLogo.png
+![StealthBid Logo](assets/images/BrightLogo.png)
 
 StealthBid is your ultimate auction marketplace, where you can discover unique products, bid on hidden treasures, and get incredible deals. 
 Whether you're a seasoned bidder or a newcomer, StealthBid offers an exciting way to participate in online auctions for rare finds and valuable items.
