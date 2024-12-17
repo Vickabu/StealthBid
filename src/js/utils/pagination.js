@@ -1,3 +1,14 @@
+/**
+ * Displays pagination controls to navigate through pages.
+ * It creates buttons for first, previous, next, and last pages,
+ * along with a page indicator showing the current and total page numbers.
+ *
+ * @param {number} totalPages - The total number of pages available.
+ * @param {number} currentPage - The current page number.
+ * @param {Function} onPageChange - A callback function to be called when a page is changed.
+ *                                   It receives the new page number as an argument.
+ */
+
 export function displayPagination(totalPages, currentPage, onPageChange) {
   const paginationContainer = document.getElementById("pagination-container");
   paginationContainer.innerHTML = "";

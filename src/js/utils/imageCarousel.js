@@ -1,3 +1,9 @@
+/**
+ * Creates an image carousel element for a given media array.
+ * @param {Array} media - An array of media objects, each containing `url` and `alt` properties.
+ * @returns {HTMLElement} The carousel element.
+ */
+
 export function createImageCarousel(media) {
   const carousel = document.createElement("div");
   carousel.classList.add(
@@ -12,7 +18,7 @@ export function createImageCarousel(media) {
     let currentIndex = 0;
 
     const imageWrapper = document.createElement("div");
-    imageWrapper.classList.add("relative", "w-full", "h-full");
+    imageWrapper.classList.add("relative", "w-full", "h-full", "group");
 
     media.forEach((item, index) => {
       const img = document.createElement("img");
@@ -27,6 +33,8 @@ export function createImageCarousel(media) {
         "object-cover",
         "transition-opacity",
         "duration-500",
+        "transition-transform",
+        "group-hover:scale-110",
         index === 0 ? "opacity-100" : "opacity-0",
       );
       img.dataset.index = index;

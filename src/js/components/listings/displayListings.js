@@ -30,6 +30,18 @@ document
     }
   });
 
+/**
+ * Fetches and displays a paginated list of listings, based on the provided search query and sorting option.
+ * Displays the listings in the "listings-container" element and handles pagination.
+ *
+ * @async
+ * @param {string} [query=""] - The search query to filter the listings (optional).
+ * @param {string} [sortOption="time-low-high"] - The sorting option to determine the order of the listings (optional).
+ *      Possible values: "newest", "oldest", "time-low-high", "time-high-low", "a-z", "z-a".
+ *
+ * @returns {void}
+ */
+
 export async function displayListings(
   query = "",
   sortOption = "time-low-high",
@@ -63,6 +75,17 @@ export async function displayListings(
     hideLoader(false);
   }
 }
+
+/**
+ * Returns the sorting options (field and order) based on the provided sort option.
+ *
+ * @param {string} sortOption - The sorting option that determines how listings are sorted.
+ *      Possible values: "newest", "oldest", "time-low-high", "time-high-low", "a-z", "z-a".
+ *
+ * @returns {Object} The sorting options containing:
+ *      - {string} sort: The field by which to sort the listings.
+ *      - {string} sortOrder: The order of the sorting, either "asc" or "desc".
+ */
 
 function getSortOptions(sortOption) {
   const sortOptionsMap = {

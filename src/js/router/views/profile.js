@@ -4,6 +4,14 @@ import { displayUserListings } from "../../components/profile/displayUserListing
 import { hideLoader, showLoader } from "../../ui/global/loader";
 import { fetchListing } from "../../api/listings/read";
 
+/**
+ * Fetches and displays the profile page for a user. The function retrieves the username from the URL, fetches the user's profile data,
+ * and displays the profile information along with their listings and wins. A loader is displayed while the data is being fetched,
+ * and an error message is shown if the profile data cannot be loaded.
+ *
+ * @returns {void}
+ */
+
 export async function displayProfilePage() {
   const urlParams = new URLSearchParams(window.location.search);
   const userName = urlParams.get("name");

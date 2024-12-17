@@ -1,5 +1,29 @@
 import { createListingCard } from "../listings/createListingsCard";
-import { createImageCarousel } from "../../utils/imageCarousel";
+import { createWinCard } from "./winCard";
+
+/**
+ * Displays the user's active listings and wins on their profile page. If the logged-in user is the same as the user whose profile is being displayed,
+ * sections for "My Auctions" and "My Wins" are shown. Listings and wins are dynamically populated into their respective containers.
+ *
+ * @param {Array} listingsData - Array of listings data for the user.
+ * @param {Object} listingsData[] - Each listing contains information about a specific auction.
+ * @param {string} listingsData[].title - The title of the listing.
+ * @param {string} listingsData[].description - The description of the listing.
+ * @param {Array} listingsData[].media - Array of media for the listing (images/videos).
+ * @param {string} listingsData[].endsAt - The end date and time of the listing.
+ *
+ * @param {Array} winsData - Array of wins data for the user.
+ * @param {Object} winsData[] - Each win contains information about a specific auction the user has won.
+ * @param {string} winsData[].title - The title of the won listing.
+ * @param {string} winsData[].description - The description of the won listing.
+ * @param {Array} winsData[].media - Array of media for the won listing (images/videos).
+ * @param {string} winsData[].endsAt - The end date and time of the won listing.
+ *
+ * @param {string} userName - The username of the profile being viewed.
+ * @param {string} loggedInUserName - The username of the logged-in user.
+ *
+ * @returns {void}
+ */
 
 export async function displayUserListings(
   listingsData,
@@ -57,71 +81,4 @@ export async function displayUserListings(
       winsContainer.appendChild(noWinsMessage);
     }
   }
-}
-
-function createWinCard(win) {
-  const { title, description, media, endsAt } = win;
-  const dateFormatted = new Date(endsAt).toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  });
-
-  const card = document.createElement("div");
-  card.classList.add(
-    "bg-white",
-    "rounded-sm",
-    "shadow-md",
-    "overflow-hidden",
-    "hover:shadow-lg",
-    "transition-shadow",
-    "cursor-pointer",
-    "flex",
-    "flex-col",
-    "min-h-[400px]",
-    "relative",
-    "mb-4",
-  );
-
-  const imageCarousel = createImageCarousel(media);
-  card.prepend(imageCarousel);
-
-  const titleElement = document.createElement("h3");
-  titleElement.classList.add(
-    "text-lg",
-    "font-semibold",
-    "mb-2",
-    "px-4",
-    "py-2",
-  );
-  titleElement.textContent = title || "No Title";
-
-  const descriptionElement = document.createElement("p");
-  descriptionElement.classList.add("text-gray-600", "mb-4", "px-4");
-  descriptionElement.textContent = description || "No description available.";
-
-  const dateElement = document.createElement("span");
-  dateElement.classList.add(
-    "text-sm",
-    "text-gray-500",
-    "p-4",
-    "mt-auto",
-    "border-t",
-  );
-  dateElement.textContent = `${dateFormatted}`;
-
-  const cardContent = document.createElement("div");
-  cardContent.classList.add("flex-grow", "flex", "flex-col");
-
-  cardContent.appendChild(titleElement);
-  cardContent.appendChild(descriptionElement);
-  cardContent.appendChild(dateElement);
-
-  card.appendChild(cardContent);
-
-  cardContent.addEventListener("click", () => {
-    window.location.href = `/listing/?id=${win.id}`;
-  });
-
-  return card;
 }
