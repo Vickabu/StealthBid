@@ -136,15 +136,15 @@ export async function fetchListing(id) {
   }
 }
 
-/**
- * Fetches a list of listings by a specific user's profile name.
- *
- * @param {string} name - The user's profile name.
- * @returns {Array} - Returns an array of the user's listings or an empty array if the request fails.
- *
- * @example
- * const userListings = await fetchUserListings("john_doe");
- */
+// /**
+//  * Fetches a list of listings by a specific user's profile name.
+//  *
+//  * @param {string} name - The user's profile name.
+//  * @returns {Array} - Returns an array of the user's listings or an empty array if the request fails.
+//  *
+//  * @example
+//  * const userListings = await fetchUserListings("john_doe");
+//  */
 
 export async function fetchUserListings(name) {
   try {
@@ -158,7 +158,6 @@ export async function fetchUserListings(name) {
     }
 
     const listingsData = await response.json();
-    console.log(listingsData);
     return listingsData;
   } catch (error) {
     console.error("Error fetching user listings:", error);

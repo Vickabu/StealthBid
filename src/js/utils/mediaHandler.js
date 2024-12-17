@@ -62,8 +62,3 @@ export function addMedia() {
 
   mediaCount++;
 }
-
-// export function removeMedia(button) {
-//   button.parentElement.remove();
-//   mediaCount--;
-// }

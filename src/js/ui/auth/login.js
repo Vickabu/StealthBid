@@ -1,5 +1,5 @@
 import { login } from "../../api/auth/login";
-import { hideLoader, showLoader } from "../../utils/loader";
+import { hideLoader, showLoader } from "../global/loader";
 import { validateField } from "../../utils/validate";
 
 /**
@@ -39,9 +39,8 @@ export async function onLogin(event) {
     hideLoader();
 
     window.toastr.success("Login successful", "Welcome!");
-    console.log("Success toast shown");
     setTimeout(() => {
-      window.location.href = "/";
+      window.location.reload();
     }, 1000);
   } catch (error) {
     hideLoader();

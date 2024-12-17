@@ -1,11 +1,3 @@
-// export function updateLoader(isVisible) {
-//   if (isVisible) {
-//     showLoader();
-//   } else {
-//     hideLoader();
-//   }
-// }
-
 export function showLoader() {
   const loader = document.createElement("div");
   loader.id = "loader";
@@ -16,8 +8,6 @@ export function showLoader() {
     "left-0",
     "w-full",
     "h-full",
-    // "bg-white",
-    // "bg-opacity-70",
     "flex",
     "justify-center",
     "items-center",
@@ -45,12 +35,3 @@ export function hideLoader() {
     loader.remove();
   }
 }
-
-// const style = document.createElement("style");
-// style.innerHTML = `
-//   @keyframes spin {
-//     0% { transform: rotate(0deg); }
-//     100% { transform: rotate(360deg); }
-//   }
-// `;
-// document.head.appendChild(style);

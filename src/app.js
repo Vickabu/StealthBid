@@ -4,8 +4,8 @@ import toastr from "toastr";
 import "toastr/build/toastr.min.css";
 
 import router from "./js/router";
-import { createNavbarAndModal } from "./js/utils/navbar";
-import { createFooter } from "./js/utils/footer";
+import { createNavbarAndModal } from "./js/components/global/navbar";
+import { createFooter } from "./js/components/global/footer";
 import { mainStyles } from "./js/utils/styles";
 
 window.toastr = toastr;

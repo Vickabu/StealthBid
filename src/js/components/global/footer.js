@@ -1,5 +1,5 @@
 export function createFooter() {
-  const footer = document.createElement("footer");
+  const footer = document.querySelector("footer");
   footer.classList.add(
     "w-full",
     "bg-deepTeal",

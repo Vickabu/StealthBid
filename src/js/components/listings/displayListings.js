@@ -1,8 +1,8 @@
 import { createListingCard } from "./createListingsCard";
-import { hideLoader, showLoader } from "./loader";
-import { displayPagination } from "./pagination";
-import { showSearchTag } from "./searchTag";
-import { fetchListingsData } from "./handleFetchListings";
+import { hideLoader, showLoader } from "../../ui/global/loader";
+import { displayPagination } from "../../utils/pagination";
+import { showSearchTag } from "../../utils/searchTag";
+import { fetchListingsData } from "../../utils/handleFetchListings";
 
 let currentPage = 1;
 const itemsPerPage = 12;
@@ -37,7 +37,6 @@ export async function displayListings(
   try {
     const { sort, sortOrder } = getSortOptions(sortOption);
     let listings = await fetchListingsData(query, 100, sort, sortOrder);
-    console.log("Fetched Listings:", listings);
 
     const totalPages = Math.ceil(listings.length / itemsPerPage);
     const paginatedListings = listings.slice(

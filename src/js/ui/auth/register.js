@@ -1,5 +1,5 @@
 import { register } from "../../api/auth/register";
-import { hideLoader, showLoader } from "../../utils/loader";
+import { hideLoader, showLoader } from "../global/loader";
 import { validateField } from "../../utils/validate";
 
 /**

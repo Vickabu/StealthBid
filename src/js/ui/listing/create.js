@@ -1,5 +1,5 @@
 import { createListing } from "../../api/listings/create";
-import { hideLoader, showLoader } from "../../utils/loader";
+import { hideLoader, showLoader } from "../global/loader";
 import { validateField } from "../../utils/validate";
 
 /**
@@ -83,8 +83,10 @@ export async function onCreateListing(event) {
 
     event.target.reset();
     document.getElementById("mediaContainer").innerHTML = "";
-    alert("Listing created successfully.");
-    window.location.href = "/";
+    toastr.success("Listing created successfully.");
+    setTimeout(() => {
+      window.location.href = "/";
+    }, 1000);
   } catch (error) {
     console.error("Error while creating:", error);
   } finally {

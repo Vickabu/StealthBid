@@ -7,15 +7,21 @@
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
-    "prepare": "husky install"
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "prepare": "husky"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@babel/cli": "^7.26.4",
+    "@babel/core": "^7.26.0",
+    "@babel/preset-env": "^7.26.0",
     "@eslint/js": "^9.15.0",
     "autoprefixer": "^10.4.20",
-    "eslint": "^9.15.0",
+    "babel-eslint": "^10.1.0",
+    "eslint": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",
     "globals": "^15.12.0",
     "husky": "^9.1.7",
@@ -25,20 +31,20 @@
     "tailwindcss": "^3.4.15",
     "vite": "^5.4.11"
   },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "prettier --write"
-    ],
-    "*.css": [
-      "prettier --write"
-    ],
-    "*.html": [
-      "prettier --write"
-    ]
-  },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.1",
+    "tailwind-fontawesome": "^0.7.1",
     "toastr": "^2.1.4"
+  },
+  "lint-staged": {
+    "*.{js,mjs}": [
+      "eslint --cache --fix",
+      "prettier --write ."
+    ],
+    "*.{html,scss,json}": [
+      "prettier --write ."
+    ],
+    "*.js": "eslint --cache --fix",
+    "*.{js,css,md}": "prettier --write"
   }
 }

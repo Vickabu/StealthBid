@@ -1,6 +1,6 @@
 import { deleteListing } from "../../api/listings/delete";
 import { showConfirmationModal } from "../../utils/confirmationModal";
-import { hideLoader, showLoader } from "../../utils/loader";
+import { hideLoader, showLoader } from "../global/loader";
 
 /**
  * Handles the deletion of a listing.

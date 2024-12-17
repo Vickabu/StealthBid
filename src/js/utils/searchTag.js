@@ -1,3 +1,5 @@
+import { displayListings } from "../components/listings/displayListings";
+
 export function showSearchTag(query) {
   const searchTagContainer = document.getElementById("search-tag-container");
 
@@ -25,6 +27,7 @@ export function showSearchTag(query) {
     searchTagContainer.classList.remove("bg-softSteel");
     searchTagContainer.innerHTML = "";
     document.getElementById("search-bar").value = "";
+    displayListings("");
   };
 
   searchTagContainer.append(removeTagButton);

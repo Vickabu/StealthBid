@@ -1,4 +1,4 @@
-import { tabStyles } from "./styles";
+import { tabStyles } from "../../utils/styles";
 
 /**
  * Creates tab buttons for switching between Login and Register forms.

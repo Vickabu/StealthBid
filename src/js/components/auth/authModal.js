@@ -1,4 +1,4 @@
-import { modalStyles } from "./styles";
+import { modalStyles } from "../../utils/styles";
 import { createAuthForms } from "./authForms";
 import { createAuthTabs } from "./authTabs";
 
@@ -6,15 +6,19 @@ import { createAuthTabs } from "./authTabs";
  * Opens the authentication modal by removing the "hidden" class.
  *
  * This function makes the modal with the ID "auth-popup" visible by removing the "hidden" class.
+ * It also ensures any existing authentication message is removed before opening the modal.
  *
  * @function
  * @example
  * // Example usage:
- * openAuthModal(); // Opens the modal
+ * openAuthModal(); // Opens the modal and removes any previous messages
  */
 
 export function openAuthModal() {
   const modal = document.getElementById("auth-popup");
+  const modalContainer = modal.querySelector("div");
+  const existingMessage = modalContainer.querySelector("#auth-message");
+  if (existingMessage) existingMessage.remove();
   modal.classList.remove("hidden");
 }
 
