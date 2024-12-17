@@ -25,6 +25,7 @@ export function createFooter() {
     "flex",
     "flex-col",
     "items-center",
+    "mt-auto",
   );
 
   const contentContainer = document.createElement("div");
