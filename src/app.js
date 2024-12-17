@@ -18,7 +18,7 @@ toastr.options = {
 };
 
 async function runApp() {
-  document.body.classList.add("bg-lightGrey");
+  document.body.classList.add("bg-lightGrey", "min-h-screen");
   await router(window.location.pathname);
   createNavbarAndModal();
   createFooter();
