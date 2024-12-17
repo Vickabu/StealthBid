@@ -1,5 +1,13 @@
 import { displayListings } from "../components/listings/displayListings";
 
+/**
+ * Displays a search tag with the current query and provides a button to remove it.
+ * The search tag is shown inside the "search-tag-container", and the user can
+ * click the button to clear the search and reset the search bar.
+ *
+ * @param {string} query - The search query to display in the search tag.
+ */
+
 export function showSearchTag(query) {
   const searchTagContainer = document.getElementById("search-tag-container");
 

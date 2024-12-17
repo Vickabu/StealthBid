@@ -19,7 +19,7 @@ const validations = {
 
   title: {
     minLength: 1,
-    maxLength: 280,
+    maxLength: 100,
     errorMessage: "Title must be between 1 and 280 characters.",
   },
   description: {

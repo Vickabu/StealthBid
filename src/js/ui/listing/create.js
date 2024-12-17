@@ -16,7 +16,7 @@ export async function onCreateListing(event) {
   event.preventDefault();
 
   const title = event.target.title.value.trim();
-  const description = document.getElementById("textarea").innerText.trim();
+  const description = document.getElementById("textarea").value.trim();
   const tags = event.target.tags.value
     .split(",")
     .map((tag) => tag.trim())

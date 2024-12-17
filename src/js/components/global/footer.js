@@ -1,3 +1,20 @@
+/**
+ * Creates and appends a footer to the document with a logo, a horizontal rule, and footer text.
+ * The footer is styled with utility classes for layout and appearance.
+ *
+ * @function createFooter
+ * @returns {void} This function does not return a value. It directly manipulates the DOM to append a footer element.
+ *
+ * @description
+ * The function creates a footer element and applies the following structure:
+ * - A container div for the footer content.
+ * - A logo image with a specified source and alternative text.
+ * - A horizontal rule (`<hr>`) for separating sections.
+ * - Footer text indicating copyright information.
+ *
+ * The footer is styled using Tailwind CSS utility classes for layout and design.
+ */
+
 export function createFooter() {
   const footer = document.querySelector("footer");
   footer.classList.add(
@@ -43,7 +60,4 @@ export function createFooter() {
   contentContainer.appendChild(hr);
   contentContainer.appendChild(footerText);
   footer.appendChild(contentContainer);
-
-  const body = document.querySelector("body");
-  body.appendChild(footer);
 }

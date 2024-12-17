@@ -5,6 +5,38 @@ import { onBidListing } from "../../ui/listing/bid";
 import { createImageCarousel } from "../../utils/imageCarousel";
 import { viewBidsModal } from "./viewBidsModal";
 import { openAuthModal } from "../auth/authModal";
+import { applyBreakWordClass } from "../../utils/textAndLayoutFix";
+
+/**
+ * Creates a detailed card for a listing, displaying its title, description, media, seller information, bids,
+ * and time remaining. Includes functionality for bidding, viewing bids, and managing the listing if the current
+ * user is the seller.
+ *
+ * @function createListingDetailCard
+ * @param {Object} listing - The listing data used to populate the detail card.
+ * @param {string} listing.title - The title of the listing.
+ * @param {string} listing.description - The description of the listing.
+ * @param {Array} listing.media - An array of media objects associated with the listing.
+ * @param {Object} listing.seller - The seller's information.
+ * @param {Array} [listing.bids=[]] - The list of bids placed on the listing.
+ * @param {string} listing.endsAt - The deadline for the listing in ISO format.
+ * @param {string} listing.id - The unique identifier for the listing.
+ *
+ * @returns {HTMLElement} The created HTML element representing the listing detail card.
+ *
+ * @description
+ * This function constructs a card with the following:
+ * - A carousel of images representing the listing's media.
+ * - The listing's title, description, and seller's information.
+ * - Information about the highest bid and the remaining time for the listing.
+ * - A "View Bids" button if there are bids and the user is logged in.
+ * - An input field and button for placing a bid if the user is logged in and the listing is still active.
+ * - A "Sign In To Place A Bid" button if the user is not logged in.
+ * - If the current user is the seller, a "Delete Listing" button for managing the listing.
+ *
+ * The card is styled with Tailwind CSS utility classes, and behavior is added based on the state of the listing
+ * (e.g., whether it is expired or if the current user is the seller).
+ */
 
 export function createListingDetailCard(listing) {
   const { title, description, media, seller, bids = [], endsAt, id } = listing;
@@ -41,7 +73,12 @@ export function createListingDetailCard(listing) {
   );
 
   const imageCarousel = createImageCarousel(media);
-  imageCarousel.classList.add("w-full", "h-96", "object-cover");
+  imageCarousel.classList.add(
+    "w-full",
+    "h-96",
+    "object-cover",
+    "cursor-pointer",
+  );
   card.appendChild(imageCarousel);
 
   const contentSection = document.createElement("div");
@@ -61,10 +98,12 @@ export function createListingDetailCard(listing) {
   const titleElement = document.createElement("h1");
   titleElement.classList.add("text-3xl", "font-semibold", "mb-4");
   titleElement.textContent = title;
+  applyBreakWordClass(titleElement);
 
   const descriptionElement = document.createElement("p");
   descriptionElement.classList.add("text-gray-700", "mb-6");
   descriptionElement.textContent = description || "No description available.";
+  applyBreakWordClass(descriptionElement);
 
   const sellerCardElement = createSellerCard(seller);
 

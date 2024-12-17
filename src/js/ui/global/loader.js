@@ -1,3 +1,8 @@
+/**
+ * Displays a loading spinner on the screen.
+ * @returns {void}
+ */
+
 export function showLoader() {
   const loader = document.createElement("div");
   loader.id = "loader";
@@ -28,6 +33,11 @@ export function showLoader() {
   loader.appendChild(spinner);
   document.body.appendChild(loader);
 }
+
+/**
+ * Hides the loading spinner from the screen.
+ * @returns {void}
+ */
 
 export function hideLoader() {
   const loader = document.getElementById("loader");

@@ -36,7 +36,7 @@ export async function onDeleteListing(event) {
         window.toastr.success("Listing deleted successfully.");
 
         setTimeout(() => {
-          window.location.href = "/";
+          window.history.back();
         }, 1000);
       } else {
         window.toastr.error("Failed to delete the listing.");

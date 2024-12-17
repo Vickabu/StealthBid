@@ -1,5 +1,27 @@
 import { onUpdateProfile } from "../../ui/profile/update";
 
+/**
+ * Displays the profile content of a user, including their banner, avatar, name, bio, and credits.
+ * If the logged-in user matches the profile being viewed, a button is provided to update the profile details.
+ * This includes form fields for updating the avatar, banner, and bio, along with buttons to save or cancel changes.
+ *
+ * @param {Object} profileData - The data of the user profile to be displayed.
+ * @param {string} profileData.name - The name of the user.
+ * @param {string} profileData.bio - The bio of the user.
+ * @param {Object} profileData.avatar - The avatar of the user.
+ * @param {string} profileData.avatar.url - The URL of the user's avatar.
+ * @param {string} profileData.avatar.alt - The alt text for the avatar image.
+ * @param {Object} profileData.banner - The banner image for the user's profile.
+ * @param {string} profileData.banner.url - The URL of the user's banner.
+ * @param {number} profileData.credits - The credits available to the user.
+ *
+ * @param {string} userName - The username of the user whose profile is being displayed.
+ *
+ * @param {string} loggedInUserName - The username of the logged-in user.
+ *
+ * @returns {void}
+ */
+
 export async function displayProfileContent(
   profileData,
   userName,

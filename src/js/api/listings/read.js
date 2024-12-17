@@ -85,6 +85,7 @@ export async function fetchSearchListings(
     url.searchParams.append("page", page);
     url.searchParams.append("q", encodeURIComponent(query));
     url.searchParams.append("_seller", "true");
+    url.searchParams.append("_bids", "true");
 
     const response = await fetch(url.toString(), {
       method: "GET",

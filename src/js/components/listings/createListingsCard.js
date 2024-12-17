@@ -1,5 +1,21 @@
 import { createImageCarousel } from "../../utils/imageCarousel";
 import { calculateTimeRemaining } from "../../utils/timeManagement";
+import { applyBreakWordClass } from "../../utils/textAndLayoutFix";
+
+/**
+ * Creates a listing card element displaying the listing's title, description, media, highest bid, time remaining, and seller info.
+ * Adds functionality for navigating to the listing detail page and highlighting if the current user is the owner of the listing.
+ *
+ * @param {Object} listing - The listing data.
+ * @param {string} listing.title - The title of the listing.
+ * @param {string} listing.description - The description of the listing.
+ * @param {Array} listing.media - Media associated with the listing.
+ * @param {Object} listing.seller - The seller's details.
+ * @param {Array} [listing.bids=[]] - List of bids on the listing.
+ * @param {string} listing.endsAt - The deadline for the listing.
+ *
+ * @returns {HTMLElement} The created listing card element.
+ */
 
 export function createListingCard(listing) {
   const { title, description, media, seller, bids = [], endsAt } = listing;
@@ -39,10 +55,12 @@ export function createListingCard(listing) {
   const titleElement = document.createElement("h2");
   titleElement.classList.add("text-lg", "font-semibold", "mb-2");
   titleElement.textContent = title;
+  applyBreakWordClass(titleElement);
 
   const descriptionElement = document.createElement("p");
   descriptionElement.classList.add("text-gray-600", "mb-4");
   descriptionElement.textContent = description || "No description available.";
+  applyBreakWordClass(descriptionElement);
 
   const bidInfoContainer = document.createElement("div");
   bidInfoContainer.classList.add(

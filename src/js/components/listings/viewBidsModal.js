@@ -1,3 +1,20 @@
+/**
+ * Displays a modal with the list of bids for a specific listing.
+ * The modal shows bidder details (name, avatar, bid amount, and time placed)
+ * and allows the user to close the modal by clicking the close button or pressing the "Escape" key.
+ *
+ * @param {Array<Object>} bids - An array of bid objects associated with the listing.
+ *      Each bid object should contain:
+ *      - {Object} bidder - The bidder's details.
+ *      - {string} bidder.avatar.url - The URL of the bidder's avatar image.
+ *      - {string} bidder.name - The name of the bidder.
+ *      - {number} amount - The bid amount.
+ *      - {string} created - The timestamp of when the bid was placed.
+ * @param {string} title - The title of the listing for which the bids are placed.
+ *
+ * @returns {void}
+ */
+
 export function viewBidsModal(bids, title) {
   const overlay = document.createElement("div");
   overlay.classList.add(
@@ -30,6 +47,7 @@ export function viewBidsModal(bids, title) {
   headline.append(hr);
 
   const bidsList = document.createElement("ul");
+  bidsList.classList.add("max-h-96", "overflow-y-auto", "space-y-4");
 
   bids
     .sort((a, b) => b.amount - a.amount)
