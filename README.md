@@ -21,7 +21,7 @@ To get started with StealthBid on your local machine, follow these steps:
 
 1. Clone the repository to your local machine:
    ```bash
-   git clone https://github.com/yourusername/stealthbid.git
+   git clone https://github.com/Vickabu/stealthbid.git
    
 2. Navigate into the project directory:
    ```bash
