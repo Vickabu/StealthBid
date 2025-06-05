@@ -1,29 +1,31 @@
 import { bidListing } from "../../api/listings/bid";
+import { hideLoader, showLoader } from "../global/loader";
 
 /**
- * Handles the process of placing a bid on a listing.
+ * Handles placing a bid on a listing with validation and loader.
  *
- * This function validates the listing ID and bid amount before calling the `bidListing` function to place the bid.
- * It throws an error if the validation fails or if the `bidListing` function fails.
- *
- * @param {string} listingId - The unique identifier of the listing on which the bid is placed.
- * @param {number} bidAmount - The amount of the bid to place on the listing. It must be greater than 0.
- *
- * @returns {Promise<Object>} A promise that resolves to the result of the `bidListing` function, containing the placed bid details.
- *
- * @throws {Error} Throws an error if the listing ID or bid amount is invalid, or if placing the bid fails.
+ * @param {string} listingId - The listing ID to place a bid on.
+ * @param {number} bidAmount - The bid amount (must be > 0).
+ * @returns {Promise<Object>} Result of the bid.
+ * @throws {Error} If validation or API call fails.
  */
-
 export async function onBidListing(listingId, bidAmount) {
-  try {
-    if (!listingId || !bidAmount || bidAmount <= 0) {
-      throw new Error("Invalid listing ID or bid amount.");
-    }
+  if (typeof listingId !== "string" || listingId.trim() === "") {
+    throw new Error("Listing ID is required.");
+  }
 
+  if (typeof bidAmount !== "number" || isNaN(bidAmount) || bidAmount <= 0) {
+    throw new Error("Please enter a valid bid amount greater than 0.");
+  }
+
+  showLoader();
+
+  try {
     const result = await bidListing(listingId, bidAmount);
     return result;
   } catch (error) {
-    console.error("Error in onBidListing:", error);
-    throw new Error("Failed to place bid. Please try again.");
+    throw new Error(error.message || "Failed to place bid. Please try again.");
+  } finally {
+    hideLoader();
   }
 }

@@ -4,14 +4,10 @@ import { validateField } from "../../utils/validate";
 
 /**
  * Handles the process of creating a new listing.
- * Validates form input, sends a request to the API, and handles success or failure.
  *
  * @async
- * @param {Event} event - The submit event triggered when the form is submitted.
- * @returns {void}
- * @throws {Error} If the API request fails or if validation errors occur.
+ * @param {Event} event - The submit event.
  */
-
 export async function onCreateListing(event) {
   event.preventDefault();
 
@@ -35,13 +31,8 @@ export async function onCreateListing(event) {
   fields.forEach((field) => {
     const errorElement = document.getElementById(`${field.id}Error`);
     const inputElement = document.getElementById(field.id);
-
-    if (errorElement) {
-      errorElement.classList.add("hidden");
-    }
-    if (inputElement) {
-      inputElement.classList.remove("error");
-    }
+    if (errorElement) errorElement.classList.add("hidden");
+    if (inputElement) inputElement.classList.remove("error");
   });
 
   for (const field of fields) {
@@ -57,14 +48,11 @@ export async function onCreateListing(event) {
       if (inputElement) {
         inputElement.classList.add("error");
       }
-
       validationError = true;
     }
   }
 
-  if (validationError) {
-    return;
-  }
+  if (validationError) return;
 
   const mediaUrls = event.target.querySelectorAll("[name='mediaUrl']");
   const media = Array.from(mediaUrls)
@@ -84,11 +72,12 @@ export async function onCreateListing(event) {
     event.target.reset();
     document.getElementById("mediaContainer").innerHTML = "";
     toastr.success("Listing created successfully.");
+
     setTimeout(() => {
       window.location.href = "/";
     }, 1000);
   } catch (error) {
-    console.error("Error while creating:", error);
+    toastr.error(error.message || "Failed to create listing.");
   } finally {
     hideLoader();
   }

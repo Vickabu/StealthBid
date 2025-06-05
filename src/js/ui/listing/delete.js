@@ -14,40 +14,40 @@ import { hideLoader, showLoader } from "../global/loader";
 
 export async function onDeleteListing(event) {
   event.stopPropagation();
-  const deleteButton = event.target;
-  const listingId = deleteButton.dataset.listingId;
+
+  const btn = event.target;
+  const listingId = btn.dataset.listingId;
 
   if (!listingId) {
-    console.error("Listing ID not found.");
+    window.toastr.error("Listing ID mangler 😕");
     return;
   }
 
-  const confirmation = await showConfirmationModal(
+  const confirmed = await showConfirmationModal(
     "Are you sure you want to delete this listing?",
-    "Yes",
+    "Yes, delete it",
     "Cancel",
   );
 
-  if (confirmation) {
-    showLoader();
-    try {
-      const success = await deleteListing(listingId);
-      if (success) {
-        window.toastr.success("Listing deleted successfully.");
-
-        setTimeout(() => {
-          window.history.back();
-        }, 1000);
-      } else {
-        window.toastr.error("Failed to delete the listing.");
-      }
-    } catch (error) {
-      console.error("Error deleting listing:", error);
-      window.toastr.error("An error occurred while deleting the listing.");
-    }
-  } else {
-    window.toastr.info("Listing deletion canceled.");
+  if (!confirmed) {
+    window.toastr.info("Deletion canceled.");
+    return;
   }
 
-  hideLoader();
+  showLoader();
+
+  try {
+    await deleteListing(listingId);
+    window.toastr.success("Listing deleted successfully 🎉");
+
+    setTimeout(() => {
+      window.history.back();
+    }, 800);
+  } catch (err) {
+    window.toastr.error(
+      err instanceof Error ? err.message : "Could not delete listing.",
+    );
+  } finally {
+    hideLoader();
+  }
 }

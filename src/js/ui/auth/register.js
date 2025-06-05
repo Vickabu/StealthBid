@@ -2,25 +2,19 @@ import { register } from "../../api/auth/register";
 import { hideLoader, showLoader } from "../global/loader";
 import { validateField } from "../../utils/validate";
 
-/**
- * Handles the registration process for a new user.
- *
- * This function is triggered when the registration form is submitted.
- * It collects the form values, validates the input fields, and calls the `register` API function to create a new user account.
- * If validation fails, it displays error messages next to the respective form fields.
- * - On success, it shows a success message and navigates the user to the login page.
- * - On failure, it displays an error message.
- *
- * @async
- * @function
- * @param {Event} event - The submit event that triggers the registration process.
- *
- * @example
- * // Example usage:
- * document.getElementById('register-form').addEventListener('submit', onRegister);
- *
- * @throws {Error} Throws an error if the registration process fails due to invalid input or API issues.
- */
+function clearFieldErrors(fields) {
+  fields.forEach(({ id }) => {
+    const errorEl = document.getElementById(`${id}-error`);
+    if (errorEl) errorEl.innerText = "";
+    document.getElementById(id).classList.remove("error");
+  });
+}
+
+function displayFieldError(id, message) {
+  const errorEl = document.getElementById(`${id}-error`);
+  if (errorEl) errorEl.innerText = message;
+  document.getElementById(id).classList.add("error");
+}
 
 export async function onRegister(event) {
   event.preventDefault();
@@ -44,18 +38,10 @@ export async function onRegister(event) {
     },
   ];
 
-  let validationError = false;
-
-  fields.forEach((field) => {
-    const fieldElement = document.getElementById(field.id);
-    const errorMessageElement = document.getElementById(`${field.id}-error`);
-    if (errorMessageElement) {
-      errorMessageElement.innerText = "";
-    }
-    fieldElement.classList.remove("error");
-  });
-
+  clearFieldErrors(fields);
   showLoader();
+
+  let hasValidationError = false;
 
   for (const field of fields) {
     const errorMessage = validateField(
@@ -64,28 +50,26 @@ export async function onRegister(event) {
       field.referenceValue,
     );
     if (errorMessage) {
-      document.getElementById(`${field.id}-error`).innerText = errorMessage;
-      document.getElementById(field.id).classList.add("error");
-      validationError = true;
+      displayFieldError(field.id, errorMessage);
+      hasValidationError = true;
     }
   }
 
-  if (validationError) {
+  if (hasValidationError) {
     hideLoader();
     return;
   }
 
   try {
     await register({ name, email, password });
-    hideLoader();
-
     window.toastr.success("Registration successful, please log in!");
     document.getElementById("login-tab").click();
   } catch (error) {
     console.error("Registration failed:", error);
-    if (error.message !== "Validation Error") {
-      window.toastr.error(error.message);
-    }
+    window.toastr.error(
+      error.message || "Something went wrong during registration.",
+    );
+  } finally {
     hideLoader();
   }
 }

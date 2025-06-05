@@ -6,6 +6,7 @@ import { createImageCarousel } from "../../utils/imageCarousel";
 import { viewBidsModal } from "./viewBidsModal";
 import { openAuthModal } from "../auth/authModal";
 import { applyBreakWordClass } from "../../utils/textAndLayoutFix";
+import { showLoader, hideLoader } from "../../ui/global/loader";
 
 /**
  * Creates a detailed card for a listing, displaying its title, description, media, seller information, bids,
@@ -207,17 +208,20 @@ export function createListingDetailCard(listing) {
         }
 
         try {
+          showLoader();
+
           await onBidListing(id, bidAmount);
+
           toastr.success("Bid placed successfully!");
           bidInput.value = "";
+
           setTimeout(() => {
             window.location.reload();
           }, 1000);
         } catch (error) {
-          console.error("Failed to place bid:", error);
-          alert(
-            "Error placing bid. Make sure the bid is higher than the highest bid. Please try again.",
-          );
+          toastr.error(error.message || "Error placing bid. Please try again.");
+        } finally {
+          hideLoader();
         }
       });
 

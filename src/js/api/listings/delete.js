@@ -16,23 +16,24 @@ import { headers } from "../headers";
 
 export async function deleteListing(id) {
   try {
-    const response = await fetch(`${API_LISTINGS}/${id}`, {
+    const res = await fetch(`${API_LISTINGS}/${id}`, {
       method: "DELETE",
       headers: headers(),
     });
 
-    if (!response.ok) {
-      console.error(
-        "Failed to delete listing:",
-        response.status,
-        response.statusText,
-      );
-      return false;
+    if (!res.ok) {
+      const msg = `Delete failed: ${res.status} ${res.statusText}`;
+      if (process.env.NODE_ENV === "development") {
+        console.error(msg);
+      }
+      throw new Error(msg);
     }
 
-    return true;
-  } catch (error) {
-    console.error("Error deleting listing:", error);
-    return false;
+    return { success: true };
+  } catch (err) {
+    if (process.env.NODE_ENV === "development") {
+      console.error("deleteListing error:", err);
+    }
+    throw err;
   }
 }
